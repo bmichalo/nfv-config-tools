@@ -4,7 +4,6 @@
 # -use multi-queue (for DPDK)
 # -bind DPDK PMDs to optimal CPUs
 # -for pvp topologies, provide a list of optimal cpus available for the VM
-# configure an overlay network such as VxLAN
 
 # The following features are not implemented but would be nice to add:
 # -for ovs, configure x flows
@@ -96,17 +95,6 @@ switch_mode="default"
 #
 numa_mode="strict" 
 
-
-#
-# overlay_network:
-#
-#	Currently supported are the following overlay network types:
-#
-#	none:		For all switch types
-#
-#	vxlan:		For linuxbridge and ovs
-#
-overlay_network="none" 
 
 
 #
@@ -305,7 +293,7 @@ function get_dev_desc() {
 
 
 # Process options and arguments
-opts=$(getopt -q -o i:c:t:r:m:p:M:S:C:o --longoptions "no-kill,vhost-affinity:,numa-mode:,desc-override:,vhost_devices:,pci-devices:,devices:,nr-queues:,use-ht:,overlay-network:,topology:,dataplane:,switch:,switch-mode:,testpmd-path:,dpdk-nic-kmod:,prefix:,pci-desc-override:,print-config" -n "getopt.sh" -- "$@")
+opts=$(getopt -q -o i:c:t:r:m:p:M:S:C:o --longoptions "no-kill,vhost-affinity:,numa-mode:,desc-override:,vhost_devices:,pci-devices:,devices:,nr-queues:,use-ht:,topology:,dataplane:,switch:,switch-mode:,testpmd-path:,dpdk-nic-kmod:,prefix:,pci-desc-override:,print-config" -n "getopt.sh" -- "$@")
 if [ $? -ne 0 ]; then
 	printf -- "$*\n"
 	printf "\n"
@@ -325,7 +313,6 @@ if [ $? -ne 0 ]; then
 	printf -- "\t\t--use-ht=[y|n] ........................ y=Use both cpu-threads on HT core\n"
 	printf -- "\t\t                                        n=Only use 1 cpu-thread per core\n"
 	printf -- "\t\t                                        Note: Using HT has better per/core throuhgput, but not using HT has better per-queue throughput\n\n"
-	printf -- "\t\t--overlay-network=[none|vxlan] ........ Network overlay used, if any (not supported on all bridge types)\n\n"
 	printf -- "\t\t--topology=str ........................ pp:            Two physical devices on same bridge\n"
         printf -- "\t\t                                        pvp or pv,vp:  Two bridges, each with a phys port and a virtio port)\n\n"
 	printf -- "\t\t--dataplane=str ....................... dpdk, kernel, or kernel-hw-offload\n\n"
@@ -391,14 +378,6 @@ while true; do
 		if [ -n "$1" ]; then
 			use_ht="$1"
 			log "use_ht: [$use_ht]"
-			shift
-		fi
-		;;
-		--overlay-network)
-		shift
-		if [ -n "$1" ]; then
-			overlay_network="$1"
-			log "overlay_network: [$overlay_network]"
 			shift
 		fi
 		;;
@@ -503,7 +482,6 @@ while true; do
 		echo "switch = $switch"
 		echo "switch_mode = $switch_mode"
 		echo "numa_mode = $numa_mode"
-		echo "overlay_network = $overlay_network"
 		echo "ovs_build = $ovs_build"
 		echo "dpdk_nic_kmod = $dpdk_nic_kmod"
 		echo "dataplane = $dataplane"
@@ -704,10 +682,13 @@ case $switch in
 ovs) #switch configuration
 	DB_SOCK="$ovs_run/db.sock"
 	ovs_ver=`$ovs_sbin/ovs-vswitchd --version | awk '{print $4}'`
-	log "starting ovs (ovs_ver=${ovs_ver})"
+	log "********** Starting OVS (ovs_ver=${ovs_ver}) **********"
 	mkdir -p $ovs_run
 	mkdir -p $ovs_etc
+	log "Initializing the OVS configuration database at $ovs_etc/conf.db using 'ovsdb-tool create'..."
 	$ovs_bin/ovsdb-tool create $ovs_etc/conf.db /usr/share/openvswitch/vswitch.ovsschema
+
+	log "Starting the OVS configuration database process ovsdb-server and connecting to Unix socket $DB_SOCK..." 
 	$ovs_sbin/ovsdb-server -v --remote=punix:$DB_SOCK \
 	--remote=db:Open_vSwitch,Open_vSwitch,manager_options \
 	--pidfile --detach || exit_error "failed to start ovsdb"
@@ -718,13 +699,25 @@ ovs) #switch configuration
 	"dpdk")
 		if echo $ovs_ver | grep -q "^2\.6\|^2\.7\|^2\.8\|^2\.9\|^2\.10\|^2\.11\|^2\.12\|^2\.13"; then
 			dpdk_opts=""
-			$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-init=true
+
 			#$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:vhost-sock-dir=/tmp
+
+			#
+			# Enable Vhost IOMMU feature which restricts memory that a virtio device can access.  
+			# Setting 'vfio-iommu-support' to 'true' enable vhost IOMMU support for all vhost ports 
+			# 
 			#$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:vhost-iommu-support=true
 
+			#
+			# Note both dpdk-socket-mem and dpdk-lcore-mask should be set before dpdk-init is set to 
+			# true (OVS 2.7) or OVS-DPDK is started (OVS 2.6)
+			#
 			case $numa_mode in
 			strict)
+				log "OVS setting other_config:dpdk-socket-mem = $local_socket_mem_opt"
 				$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem="$local_socket_mem_opt"
+				log "Local NUMA node non-isolated CPUs list: $local_nodes_non_iso_cpus_list"
+				log "OVS setting other_config:dpdk-lcore-mask = `get_cpumask $local_nodes_non_iso_cpus_list`"
 				$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-lcore-mask="`get_cpumask $local_nodes_non_iso_cpus_list`"
 				;;
 			preferred)
@@ -732,6 +725,11 @@ ovs) #switch configuration
 				$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-lcore-mask="`get_cpumask $all_nodes_non_iso_cpus_list`"
 				;;
 			esac
+
+			#
+			# Specify OVS should support DPDK ports
+			#
+			$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-init=true
 		else
 			dpdk_opts="--dpdk -n 4 --socket-mem $local_socket_mem_opt --"
 		fi
@@ -753,7 +751,7 @@ ovs) #switch configuration
 		exit_error "Aborting since openvswitch did not start correctly. Openvswitch exit code: [$rc]"
 	fi
 	
-	log "waiting for ovs to init"
+	log "Now intialize the OVS database using 'ovs-vsctl --no-wait init' ..."
 	$ovs_bin/ovs-vsctl --no-wait init
 
 	if [ "$dataplane" == "dpdk" ]; then
