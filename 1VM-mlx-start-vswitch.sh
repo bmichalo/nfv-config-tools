@@ -349,7 +349,7 @@ function convert_list_to_bitmask() {
 	for cpu in `echo "$cpu_list" | sed -e 's/,/ /g'`; do
 		bitmask=`echo "$bitmask + (2^$cpu)" | bc`
 	done
-	bitmask=`echo "obase=2; $bitmask | bc"`
+	bitmask=`echo "obase=2; $bitmask" | bc`
 	echo "$bitmask"
 }
 
@@ -601,65 +601,7 @@ function get_dev_desc() {
 	lspci -s $(get_dev_loc $1) | cut -d" " -f 2- | sed -s 's/ (.*$//'
 }
 
-function get_dev_netdevs() {
-	/bin/ls /sys/bus/pci/devices/$(get_dev_loc $1)/net
-}
 
-# Return the netdev device name for a PCI location and matching phys_port_name
-# This is necessary when there are more than one netdev ports per PF
-# This is also used to identify a netdev device with no actual port (use "" as the match)
-
-# Return the netdev name. Input must be "pf_location/port_number"
-function get_dev_netdev() {
-	local dev_pf_loc=`get_dev_loc $1`
-	local dev_pf_port=`get_dev_port $1`
-	local netdevs=(`get_dev_netdevs $dev_pf_loc`)
-	echo "${netdevs[$dev_pf_port]}"
-}
-
-function get_switch_id() {
-	# input shold be the netdev name
-	cat /sys/class/net/$1/phys_switch_id || return 1
-}
-
-# Return the netdev of the switchdev (representor) device
-# You must provide the full device name, aka pci_location/port-id
-function get_sd_netdev_name() {
-	local dev="$1"
-	local dev_loc=`get_dev_loc $dev`
-	local dev_port=`get_dev_port $dev`
-	local dev_netdev=`get_dev_netdev $dev`
-	local dev_sw_id=`get_switch_id $dev_netdev`
-	local veth_name=""
-	local veth_sw_id=""
-	local veth_port_name=""
-	local count=0
-	# search all virtual devices, looking for a switch_id that matches the 
-	# physical port and pick the Nth match, where N = the port ID od the device
-	for veth_name in `/bin/ls /sys/devices/virtual/net`; do
-		veth_sw_id=`cat /sys/class/net/$veth_name/phys_switch_id 2>/dev/null`
-		if [ "$dev_sw_id" == "$veth_sw_id" ]; then
-			veth_phys_port_name=`cat /sys/class/net/$veth_name/phys_port_name`
-			#if [ $dev_port -eq $count ]; then
-			if [ "$veth_phys_port_name" == "pf0vf$dev_port" ]; then
-				echo "$veth_name"
-				return
-			fi
-			if [ "$veth_phys_port_name" == "pf1vf$dev_port" ]; then
-				echo "$veth_name"
-				return
-			fi
-			if [ "$veth_phys_port_name" == "$dev_port" ]; then
-				echo "$veth_name"
-				return
-			fi
-			#((count++))
-		fi
-	done
-	if [ "$sd_eth_name" == "" ]; then
-		return 1
-	fi
-}
 
 # Process options and arguments
 opts=$(getopt -q -o i:c:t:r:m:p:M:S:C:o --longoptions "no-kill,vhost-affinity:,numa-mode:,desc-override:,vhost_devices:,pci-devices:,devices:,nr-queues:,use-ht:,overlay-network:,topology:,dataplane:,switch:,switch-mode:,testpmd-path:,dpdk-nic-kmod:,prefix:,pci-desc-override:,print-config" -n "getopt.sh" -- "$@")
@@ -1047,47 +989,7 @@ case $dataplane in
 	log "all-nodes-non-isolated cpus list is $all_nodes_non_iso_cpus_list"
 
 	if [ "$kernel_nic_kmod" != "mlx5_core" ]; then
-		# load modules and bind Ethernet cards to dpdk modules
-		for kmod in vfio vfio-pci; do
-			if lsmod | grep -q $kmod; then
-				log "not loading $kmod (already loaded)"
-			else
-				if modprobe -v $kmod; then
-					log "loaded $kmod module"
-				else
-					exit_error "Failed to load $kmmod module, exiting"
-				fi
-			fi
-		done
-
-		log "DPDK devs: $devs"
-		# bind the devices to dpdk module
-		declare -A pf_num_netdevs
-		for this_pf_loc in $(get_devs_locs $devs); do
-			driverctl unset-override $this_pf_loc
-			log "unbinding module from $this_pf_loc"
-			dpdk-devbind --unbind $this_pf_loc
-			log "binding $kernel_nic_kmod to $this_pf_loc"
-			dpdk-devbind --bind $kernel_nic_kmod $this_pf_loc
-			num_netdevs=0
-			if [ -e /sys/bus/pci/devices/"$this_pf_loc"/net/ ]; then
-				for netdev in `get_dev_netdevs $this_pf_loc`; do
-					log "taking down link on $netdev"
-					ip link set dev $netdev down
-					((num_netdevs++))
-				done
-				# this info might be needed later and it not readily available
-				# once the kernel nic driver is not bound
-				pf_num_netdevs["$this_pf_loc"]=$num_netdevs
-			else
-				# some devices don't have /sys/bus/pci/devices/$this_pf_loc/net/a so assume they have 1 netdev
-				pf_num_netdevs["$this_pf_loc"]=1
-			fi
-			log "unbinding $kernel_nic_kmod from $this_pf_loc"
-			dpdk-devbind --unbind $this_pf_loc
-			log "binding $dpdk_nic_kmod to $this_pf_loc"
-			dpdk-devbind --bind $dpdk_nic_kmod $this_pf_loc
-		done
+		exit_error "Wrong kernel module $kernel_nic_kmod  It should be 'mlx5_core'"
 	else
 		log "Mellanox adapter in use.  Using kernel module $kernel_nic_kmod"
 	fi
@@ -1099,9 +1001,7 @@ log "Configuring the vswitch: $switch"
 
 case $switch in
 ovs) #switch configuration
-	log "BILL:  Switch configuration #########################"
 	DB_SOCK="$ovs_run/db.sock"
-	log "BILL:  DB_SOCK = $DB_SOCK #########################"
 	ovs_ver=`$ovs_sbin/ovs-vswitchd --version | awk '{print $4}'`
 	log "starting ovs (ovs_ver=${ovs_ver})"
 	mkdir -p $ovs_run
@@ -1182,7 +1082,6 @@ ovs) #switch configuration
 		case $topology in
 		pvp|pv,vp)   # 10GbP1<-->VM1P1, VM1P2<-->10GbP2
 			# create the bridges/ports with 1 phys dev and 1 virt dev per bridge, to be used for 1 VM to forward packets
-			log "BILL setting up PVP test"
 			vhost_ports=""
 			ifaces=""
 			for i in `seq 0 1`; do
@@ -1221,28 +1120,22 @@ ovs) #switch configuration
 
 				$ovs_bin/ovs-vsctl --if-exists del-br $phy_br
 				$ovs_bin/ovs-vsctl add-br $phy_br -- set bridge $phy_br datapath_type=netdev
-				log "BILL:  $ovs_bin/ovs-vsctl add-br $phy_br -- set bridge $phy_br datapath_type=netdev"
 				$ovs_bin/ovs-vsctl add-port $phy_br ${phys_port_name} -- set Interface ${phys_port_name} type=dpdk ${phys_port_args}
-				log "BILL: $ovs_bin/ovs-vsctl add-port $phy_br ${phys_port_name} -- set Interface ${phys_port_name} type=dpdk ${phys_port_args}"
 				ifaces="$ifaces,${phys_port_name}"
 				phy_ifaces="$ifaces,${phys_port_name}"
 
-				if [ -z "$overlay_network" -o "$overlay_network" == "none" -o "$overlay_network" == "half-vxlan" -a $i -eq 1 ]; then
-					log "BILL:  Inside no overlay network code"
-					$ovs_bin/ovs-vsctl add-port $phy_br $vhost_port -- set Interface $vhost_port type=dpdkvhostuser
-					ifaces="$ifaces,$vhost_port"
-					vhu_ifaces="$ifaces,$vhost_port"
+				$ovs_bin/ovs-vsctl add-port $phy_br $vhost_port -- set Interface $vhost_port type=dpdkvhostuser
+				ifaces="$ifaces,$vhost_port"
+				vhu_ifaces="$ifaces,$vhost_port"
 
-					if [ ! -z "$vhu_desc_override" ]; then
-						log "BILL: overriding vhostuser descriptors/queue with $vhu_desc_override"
-						echo "overriding vhostuser descriptors/queue with $vhu_desc_override"
-						$ovs_bin/ovs-vsctl set Interface $vhost_port options:n_txq_desc=$vhu_desc_override
-						$ovs_bin/ovs-vsctl set Interface $vhost_port options:n_rxq_desc=$vhu_desc_override
-					fi
-
-					$ovs_bin/ovs-ofctl del-flows $phy_br
-					set_ovs_bridge_mode $phy_br ${switch_mode}
+				if [ ! -z "$vhu_desc_override" ]; then
+					echo "overriding vhostuser descriptors/queue with $vhu_desc_override"
+					$ovs_bin/ovs-vsctl set Interface $vhost_port options:n_txq_desc=$vhu_desc_override
+					$ovs_bin/ovs-vsctl set Interface $vhost_port options:n_rxq_desc=$vhu_desc_override
 				fi
+
+				$ovs_bin/ovs-ofctl del-flows $phy_br
+				set_ovs_bridge_mode $phy_br ${switch_mode}
 			done
 
 			ifaces=`echo $ifaces | sed -e s/^,//`
