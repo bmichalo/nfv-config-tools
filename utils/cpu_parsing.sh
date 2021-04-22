@@ -1,6 +1,5 @@
 #!/bin/bash
 
-testvar=1
 
 function init_cpu_usage_file() {
 	local opt
@@ -312,20 +311,5 @@ function get_cpumask() {
 	echo "$pmd_cpu_mask"
 }
 
-function test_it() {
-
-	echo "BILL running test_ti!!!"
-}
-
-
-test_bitmask="1011"
-echo "test_bitmask= $test_bitmask"
-
-convert_bitmask_to_list $test_bitmask
-
-test_list="0,1,3"
-echo "test_list= $test_list"
-
-convert_list_to_bitmask $test_list
 
 
