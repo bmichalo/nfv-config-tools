@@ -12,7 +12,13 @@
 # -configure VLAN
 # -configure a firewall
 
+script_root=$(dirname $(readlink -f $0))
+echo "script_root = $script_root"
+. $script_root/utils/cpu_parsing.sh
 
+echo "This is the main script"
+echo "testvar $testvar"
+test_it
 
 ###############################################################################
 # Default values
@@ -252,6 +258,7 @@ function exit_error() {
 	exit $error_code
 }
 
+: <<'END'
 function init_cpu_usage_file() {
 	local opt
 	local var
@@ -557,6 +564,11 @@ function get_cpumask() {
 	pmd_cpu_mask=`echo "obase=16; $bc_math" | bc`
 	echo "$pmd_cpu_mask"
 }
+
+
+END
+
+
 
 function set_ovs_bridge_mode() {
 	local bridge=$1
@@ -1093,7 +1105,11 @@ ovs) #switch configuration
 				log "pci_dev (in progress) = $pci_dev"
 				log "pci_dev = $pci_dev"
 				pci_node=`cat /sys/bus/pci/devices/"$pci_dev"/numa_node`
-				log "pci_node = $pci_node"
+
+				if [[ "$pci_node" -eq -1 ]]; then
+					log "pci_node = $pci_node  Therefore, assume one flat NUMA node with a node ID of 0.  Setting pci_node=0"
+					pci_node=0
+				fi
 
 				if [ "$vhost_affinity" == "local" ]; then
 					vhost_port="vm0-vhost-user-$i-n$pci_node"
@@ -1170,7 +1186,7 @@ ovs) #switch configuration
 		pmd_threads=`echo "$ovs_ports * $queues" | bc`
 		log "using a total of $pmd_threads PMD threads"
 		pmdcpus=`get_pmd_cpus "$devs,$vhost_ports" $queues "ovs-pmd"`
-
+		echo "pmdcpus= $pmdcpus"
 		if [ -z "$pmdcpus" ]; then
 			exit_error "Could not allocate PMD threads.  Do you have enough isolated cpus in the right NUAM nodes?"
 		fi
