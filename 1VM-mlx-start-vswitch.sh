@@ -902,7 +902,7 @@ ovs) #switch configuration
 				ifaces="$ifaces,${phys_port_name}"
 				phy_ifaces="$ifaces,${phys_port_name}"
 
-				$ovs_bin/ovs-vsctl add-port $phy_br $vhost_port -- set Interface $vhost_port type=dpdkvhostuser
+				$ovs_bin/ovs-vsctl add-port $phy_br $vhost_port -- set Interface $vhost_port type=dpdkvhostuserclient options:vhost-server-path=/tmp/$vhost_port
 				ifaces="$ifaces,$vhost_port"
 				vhu_ifaces="$ifaces,$vhost_port"
 
