@@ -694,6 +694,10 @@ ovs) #switch configuration
 	--pidfile --detach || exit_error "failed to start ovsdb"
 	/bin/rm -f /var/log/openvswitch/ovs-vswitchd.log
 
+	log "Now intialize the OVS database using 'ovs-vsctl --no-wait init' ..."
+	$ovs_bin/ovs-vsctl --no-wait init
+
+
 	log "starting ovs-vswitchd"
 	case $dataplane in
 	"dpdk")
@@ -734,9 +738,82 @@ ovs) #switch configuration
 			dpdk_opts="--dpdk -n 4 --socket-mem $local_socket_mem_opt --"
 		fi
 
+
+		#
+		# umask 002 changes the default file creation mode for the ovs-vswitchd process to itself and its group.
+		#
+		# su -g qemu changes the default group the ovs-vswitchd process runs as part of to the same group as the qemu process.
+		#
+		# The sudo causes the ovs-vswitchd process to run as the root user.  sudo support setting the group with the -g flag directly so su is not needed.
+		#
+		# The result of combining these commands is that all vhost-user socket created by OVS will be owned by the root user and the 
+		# Libvirt-qemu users group (previously "libvirt-qemu" now "kvm")
+		# 
+
+		#
+		# umask 002 changes the default file creation mode for the ovs-vswitchd process to itself and its group.
+		#
+		# su -g qemu changes the default group the ovs-vswitchd process runs as part of to the same group as the qemu process.
+		#
+		# The sudo causes the ovs-vswitchd process to run as the root user.  sudo support setting the group with the -g flag directly so su is not needed.
+		#
+		# The result of combining these commands is that all vhost-user socket created by OVS will be owned by the root user and the 
+		# qemu users group
+		# 
+		# For example, if we start ovs-vswitchd daemon without above commands, we get the file permissions as follows:
+		#
+		#
+		# numactl --cpunodebind=$local_numa_nodes $ovs_sbin/ovs-vswitchd $dpdk_opts unix:$DB_SOCK --pidfile --log-file=/var/log/openvswitch/ovs-vswitchd.log --detach
+		# 
+		# ls /var/run/openvswitch/ -ltra
+		# 
+		# total 8
+		# drwxr-xr-x 36 root root  ..
+		# -rw-r--r--  1 root root  ovsdb-server.pid
+		# srwxr-x---  1 root root  db.sock
+		# srwxr-x---  1 root root  ovsdb-server.53200.ctl
+		# -rw-r--r--  1 root root  ovs-vswitchd.pid
+		# srwxr-x---  1 root root  ovs-vswitchd.53229.ctl
+		# drwxr-xr-x  2 root root  .
+		# 
+		# Note group is owned by root, and ovs-vswitchd.pid and ovs-vswitchd.53229.ctl do not have the group 'w' bit set.  
+		# 
+		# Creating the rest of the OVS related sockets, we see the same ownership and permissions issue:
+		# 
+		# srwxr-x---  1 root root phy-br-0.snoop
+		# srwxr-x---  1 root root phy-br-0.mgmt
+		# srwxr-xr-x  1 root root vm0-vhost-user-0-n0
+		# srwxr-x---  1 root root phy-br-1.mgmt
+		# srwxr-x---  1 root root phy-br-1.snoop
+		# srwxr-xr-x  1 root root vm0-vhost-user-1-n0
+		# 
+		# When this occurs, the VM will fail to start (virsh start ....) because of the socket permissions.
+		# 
+		# What we want is to use this:
+		# 
+		# sudo su -g qemu -c "umask 002; numactl --cpunodebind=$local_numa_nodes $ovs_sbin/ovs-vswitchd $dpdk_opts unix:$DB_SOCK --pidfile --log-file=/var/log/openvswitch/ovs-vswitchd.log --detach"
+		# 
+		# which will eventually yield the following (not the group qemu and group 'w' permissions:
+		# 
+		# -rw-r--r--  1 root root ovsdb-server.pid
+		# srwxr-x---  1 root root db.sock
+		# srwxr-x---  1 root root ovsdb-server.18481.ctl
+		# -rw-rw-r--  1 root qemu ovs-vswitchd.pid
+		# srwxrwx---  1 root qemu ovs-vswitchd.18515.ctl
+		# srwxrwx---  1 root qemu phy-br-0.snoop
+		# srwxrwx---  1 root qemu phy-br-0.mgmt
+		# srwxrwxr-x  1 root qemu vm0-vhost-user-0-n0
+		# srwxrwx---  1 root qemu phy-br-1.mgmt
+		# srwxrwx---  1 root qemu phy-br-1.snoop
+		# srwxrwxr-x  1 root qemu vm0-vhost-user-1-n0
+		# 
+		# and therefore allow the VM to start successfully
+		# 
 		case $numa_mode in
 		strict)
+			log "Using strict NUMA configuration mode when starting OVS:"
 			sudo su -g qemu -c "umask 002; numactl --cpunodebind=$local_numa_nodes $ovs_sbin/ovs-vswitchd $dpdk_opts unix:$DB_SOCK --pidfile --log-file=/var/log/openvswitch/ovs-vswitchd.log --detach"
+			#numactl --cpunodebind=$local_numa_nodes $ovs_sbin/ovs-vswitchd $dpdk_opts unix:$DB_SOCK --pidfile --log-file=/var/log/openvswitch/ovs-vswitchd.log --detach
 			;;
 		preferred)
 			sudo su -g qemu -c "umask 002; $ovs_sbin/ovs-vswitchd $dpdk_opts unix:$DB_SOCK --pidfile --log-file=/var/log/openvswitch/ovs-vswitchd.log --detach"
@@ -746,13 +823,11 @@ ovs) #switch configuration
 		rc=$?
 		;;
 	esac
-
+	exit
 	if [ $rc -ne 0 ]; then
 		exit_error "Aborting since openvswitch did not start correctly. Openvswitch exit code: [$rc]"
 	fi
 	
-	log "Now intialize the OVS database using 'ovs-vsctl --no-wait init' ..."
-	$ovs_bin/ovs-vsctl --no-wait init
 
 	if [ "$dataplane" == "dpdk" ]; then
 		if echo $ovs_ver | grep -q "^2\.7\|^2\.8\|^2\.9\|^2\.10\|^2\.11\|^2\.12\|^2\.13"; then
