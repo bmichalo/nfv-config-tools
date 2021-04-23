@@ -823,7 +823,7 @@ ovs) #switch configuration
 		rc=$?
 		;;
 	esac
-	exit
+	
 	if [ $rc -ne 0 ]; then
 		exit_error "Aborting since openvswitch did not start correctly. Openvswitch exit code: [$rc]"
 	fi
