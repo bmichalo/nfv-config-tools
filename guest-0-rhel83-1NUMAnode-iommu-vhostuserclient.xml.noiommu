@@ -124,7 +124,6 @@
       <target dev='vm0-vhost-user-0-n0'/>
       <model type='virtio'/>
       <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024'/>
-      <!-- <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024' iommu='on' ats='on'/> -->
       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
     </interface>
     <interface type='vhostuser'>
@@ -133,7 +132,6 @@
       <target dev='vm0-vhost-user-1-n0'/>
       <model type='virtio'/>
       <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024'/>
-      <!-- <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024' iommu='on' ats='on'/> -->
       <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
     </interface>
     <serial type='pty'>

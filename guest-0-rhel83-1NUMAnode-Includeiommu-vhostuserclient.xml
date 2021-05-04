@@ -1,6 +1,6 @@
 <domain type='kvm'>
-  <name>guest-0-rhel83-1NUMAnode-iommu-vhostuserclient</name>
-  <uuid>d6011c18-7192-475d-be61-45e8307d6776</uuid>
+  <name>guest-0-rhel83-1NUMAnode-Includeiommu-vhostuserclient</name>
+  <uuid>d6011c18-7192-475d-be61-45e8307d8769</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://redhat.com/rhel/8.3"/>
@@ -28,7 +28,7 @@
   </numatune>
 -->
   <os>
-    <type arch='x86_64' machine='pc-q35-rhel8.3.0'>hvm</type>
+    <type arch='x86_64' machine='pc-q35-rhel8.2.0'>hvm</type>
     <boot dev='hd'/>
   </os>
   <features>
@@ -123,8 +123,7 @@
       <source type='unix' path='/tmp/vm0-vhost-user-0-n0' mode='server'/>
       <target dev='vm0-vhost-user-0-n0'/>
       <model type='virtio'/>
-      <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024'/>
-      <!-- <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024' iommu='on' ats='on'/> -->
+      <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024' iommu='on' ats='on'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
     </interface>
     <interface type='vhostuser'>
@@ -132,8 +131,7 @@
       <source type='unix' path='/tmp/vm0-vhost-user-1-n0' mode='server'/>
       <target dev='vm0-vhost-user-1-n0'/>
       <model type='virtio'/>
-      <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024'/>
-      <!-- <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024' iommu='on' ats='on'/> -->
+      <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024' iommu='on' ats='on'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
     </interface>
     <serial type='pty'>
