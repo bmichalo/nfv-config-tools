@@ -12,7 +12,7 @@ echo ""
 ovs-appctl dpif-netdev/pmd-rxq-show
 echo""
 
-cpu_list=1,4,6,8,10,12,14,16,18,20,22,31,36,38,40,42,44,46,48,50,52,54,65,68,70,72,74,76,78,80,82,84,86,95,100,102,104,106,108,110,112,114,116,118
+cpu_list=1,4,6,8,10,12,14,16,18,20,22,31,36,38,40,42,44,46,48,50,52,54,56,65,68,70,72,74,76,78,80,82,84,86,95,100,102,104,106,108,110,112,114,116,118,120
 
 #cpu_list=1,4,6,8,10,12,14,16,18,20,22,24,26,28,31,65,68,70,72,74,76,78,80,82,84,86,88,90,92,95
 pmd_cpu_mask=0
@@ -301,8 +301,24 @@ echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_t
 ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
 
 
+
 # phy-br-21
 iface=vm20-vhost-user-1-n1
+this_cpu_thread=56
+echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread"
+ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
+
+iface=vm21-vhost-user-0-n1
+this_cpu_thread=120
+echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread"
+ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
+
+
+
+
+
+# phy-br-22
+iface=vm21-vhost-user-1-n1
 this_cpu_thread=31
 echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread"
 ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
