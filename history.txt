@@ -1,0 +1,1000 @@
+   25  vim 1VM-mlx-start-vswitch.sh 
+   26  ls -ltra /tmp/
+   27  cd /tmp/
+   28  chown :users vm0-vhost-user-0-n0
+   29  ls -ltra
+   30  chown :qemu vm0-vhost-user-0-n0
+   31  ls -ltra
+   32  chown root:qemu vm0-vhost-user-0-n0
+   33  ls -ltra
+   34  chown root:qemu vm0-vhost-user-1-n0
+   35  ls -ltra
+   36  history | grep virsh
+   37  cat /var/log/libvirt/qemu/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.log > guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.log.bugzilla
+   38  cat /var/log/openvswitch/ovs-vswitchd.log ovs-vswitchd.log.bugzilla
+   39  cat /var/log/openvswitch/ovs-vswitchd.log > ovs-vswitchd.log.bugzilla
+   40  ls -ltra
+   41  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.log.bugzilla
+   42  vim ovs-vswitchd.log.bugzilla
+   43  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+   44  cd /opt/nfv-config-tools/
+   45  vim 1VM-mlx-start-vswitch.sh 
+   46  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml 
+   47  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+   48  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml 
+   49  history | grep 1VM
+   50  ./1VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+   51  ls -ltra /tmp/
+   52  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+   53  rm /tmp/vm0-vhost-user-*
+   54  ./1VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+   55  ls -ltra /tmp/
+   56  vim /var/log/openvswitch/ovs-vswitchd.log
+   57  virsh list
+   58  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+   59  vim /var/log/openvswitch/ovs-vswitchd.log
+   60  ls -ltra /tmp/
+   61  ./1VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+   62  vim /var/log/openvswitch/ovs-vswitchd.log
+   63  grep kill 1VM-mlx-start-vswitch.sh 
+   64  killall -q -w ovs-vswitchd
+   65  killall -q -w ovsdb-server
+   66  ls /tmp/
+   67  ls /tmp/ -ltra
+   68  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+   69  virsh list
+   70  virsh shutdown 1
+   71  virsh destroy 1
+   72  virsh list
+   73  cd /tmp/
+   74  ls
+   75  cat ovs-vswitchd.log.bugzilla 
+   76  ls
+   77  cat guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.log.bugzilla 
+   78  ls
+   79  rm vm0-vhost-user-0-n0
+   80  ls
+   81  cd /opt/nfv-config-tools/
+   82  vim 1VM-mlx-start-vswitch.sh 
+   83  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml 
+   84  cp guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml.noiommu
+   85  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+   86  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml.noiommu
+   87  diff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml.noiommu
+   88  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+   89  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+   90  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+   91  history | grep 1V
+   92  ./1VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+   93  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+   94  ssh -X root@10.16.31.136
+   95  ovs-vsctl show
+   96  dmesg | grep -i IOMMU
+   97  cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode.
+   98  cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode
+   99  ls /sys/module/vfio/parameters
+  100  ls /sys/module/vfio/
+  101  cat /etc/redhat-release 
+  102  uname -a
+  103  lspci -vvv | grep Mellanox
+  104  locate mv-params.json
+  105  virsh list
+  106  ssh -X root@10.16.31.136
+  107  cd /opt/nfv-config-tools/
+  108  virsh start guest-20-rhel83-2NUMAnode-node1
+  109  ssh -X root@10.16.31.195
+  110  cd /opt/nfv-config-tools/
+  111  virsh start guest-21-rhel83-2NUMAnode-node1
+  112  ssh -X root@10.16.31.196
+  113  which virt-clone
+  114  man tc
+  115  dnf groupinfo virtualization
+  116  history | grep dmi
+  117  dmidecode -t 9
+  118  dmidecode -t 9 | grep "PCI Express"
+  119  cd /opt/nfv-config-tools/
+  120  git config --global user.email
+  121  git config --global user.email "bmichalo@redhat.com"
+  122  git config --global user.email
+  123  cat /etc/redhat-release 
+  124  uname -r
+  125  cd /opt/nfv-config-tools/
+  126  virsh start guest-18-rhel83-2NUMAnode-node1
+  127  ssh -X root@10.16.31.210
+  128  cd /opt/nfv-config-tools/
+  129  virsh start guest-19-rhel83-2NUMAnode-node1
+  130  ssh -X root@10.16.31.203
+  131  cd /opt/nfv-config-tools/
+  132  virsh start guest-7-rhel83-2NUMAnode-node0
+  133  ./check_vm_booted.sh guest-7-rhel83-2NUMAnode-node0
+  134  ssh -X root@10.16.31.185
+  135  cd /opt/nfv-config-tools/
+  136  virsh start guest-6-rhel83-2NUMAnode-node0
+  137  ./check_vm_booted.sh guest-6-rhel83-2NUMAnode-node0
+  138  ssh -X root@10.16.31.168
+  139  virsh list
+  140  history | grep sys
+  141  grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node0/meminfo;grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node1/meminfo
+  142  virsh list
+  143   dmidecode -t 9 | grep -A3 “System Slot Information”
+  144  dmidecode -t 9 | grep "System Slot Information" | wc -l
+  145  dmidecode -t 9 | grep "System Slot Information"
+  146  dmidecode -t 9
+  147  dmidecode -t 9 | grep Type
+  148  history | grep ovs
+  149  ovs-vsctl show > see.txt
+  150  vim see.txt 
+  151  cd /opt/nfv-config-tools/
+  152  vim fix-affinity-2NUMAnodes-22VMs-PV-VP.sh 
+  153  ./fix-affinity-2NUMAnodes-22VMs-PV-VP.sh 
+  154  vim see.txt 
+  155  ls -ltra
+  156  date
+  157  ls -ltra ~
+  158  vim ~/see.txt 
+  159  cd /opt/nfv-config-tools/
+  160  virsh start guest-2-rhel83-2NUMAnode-node0
+  161  ./check_vm_booted.sh guest-2-rhel83-2NUMAnode-node0
+  162  ssh -X root@10.16.31.148
+  163  cd /opt/nfv-config-tools/
+  164  virsh start guest-14-rhel83-2NUMAnode-node1
+  165  ssh -X root@10.16.31.216
+  166  cd /opt/nfv-config-tools/
+  167  virsh start guest-15-rhel83-2NUMAnode-node1
+  168  ssh -X root@10.16.31.207
+  169  numastat -m
+  170  history | grpe sys
+  171  history | grep sys
+  172  grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node0/meminfo;grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node1/meminfo
+  173  cat /proc/cmdline 
+  174  history | grep service
+  175  systemctl status hugetlb-gigantic-pages.service
+  176  cd /usr/lib
+  177  ls
+  178  cd systemd/
+  179  ls
+  180  more hugetlb-reserve-pages.sh 
+  181  cd /opt/nfv-config-tools/
+  182  ls
+  183  vim 11VM-mlx-start-vswitch.sh 
+  184  cp 11VM-mlx-start-vswitch.sh 22VM-mlx-start-vswitch.sh 
+  185  cd ..
+  186  cd dpdk-rhel-perf-tools/2NUMAnodes/
+  187  ls
+  188  virsh list --all
+  189  virsh dumpxml guest-11-rhel83-2NUMAnode-node0 | more
+  190  virsh dumpxml guest-10-rhel83-2NUMAnode-node0 | more
+  191  virsh undefine guest-11-rhel83-2NUMAnode-node0
+  192  mv guest-11-rhel83-2NUMAnode-node0.xml guest-11-rhel83-2NUMAnode-node0-node1.xml
+  193  cp guest-10-rhel83-2NUMAnode-node0.xml guest-11-rhel83-2NUMAnode-node0.xml
+  194  vim guest-11-rhel83-2NUMAnode-node0.xml
+  195  mv guest-11-rhel83-2NUMAnode-node0.xml guest-11-rhel83-2NUMAnode-node1.xml
+  196  vim guest-11-rhel83-2NUMAnode-node1.xml
+  197  virsh define guest-11-rhel83-2NUMAnode-node1.xml
+  198  vim guest-11-rhel83-2NUMAnode-node1.xml
+  199  virsh define guest-11-rhel83-2NUMAnode-node1.xml
+  200  vim guest-11-rhel83-2NUMAnode-node1.xml
+  201  virsh define guest-11-rhel83-2NUMAnode-node1.xml
+  202  vim guest-11-rhel83-2NUMAnode-node1.xml
+  203  virsh define guest-11-rhel83-2NUMAnode-node1.xml
+  204  vim guest-11-rhel83-2NUMAnode-node1.xml
+  205  virsh define guest-11-rhel83-2NUMAnode-node1.xml
+  206  pushd .
+  207  cd ..
+  208  c d..
+  209  cd ..
+  210  cd nfv-config-tools/
+  211  vim 22VM-mlx-start-vswitch.sh 
+  212  history | grep 11V
+  213  ./22VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  214  vim 22VM-mlx-start-vswitch.sh 
+  215  history | grep sys
+  216  grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node0/meminfo;grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node1/meminfo
+  217  virsh start guest-11-rhel83-2NUMAnode-node1
+  218  virsh destroy guest-11-rhel83-2NUMAnode-node1
+  219  ls /tmp/
+  220  vim 22VM-mlx-start-vswitch.sh 
+  221  ovs-vsctl show
+  222  vim 22VM-mlx-start-vswitch.sh 
+  223  history | grep 22
+  224  cat /sys/bus/pci/devices/0000:c4:00.1/numa_node
+  225  vim 22VM-mlx-start-vswitch.sh 
+  226  ls /tmp/
+  227  rm /tmp/vm11-vhost-user-0-n1 
+  228  ./22VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  229  history | grep sys
+  230  history | grep virsh
+  231  history | grep sys
+  232  grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node0/meminfo;grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node1/meminfo
+  233  virsh start guest-11-rhel83-2NUMAnode-node1
+  234  virsh destroy guest-11-rhel83-2NUMAnode-node1
+  235  popd
+  236  vim guest-11-rhel83-2NUMAnode-node1.xml 
+  237  ovs-vsctl show
+  238  cd ..
+  239  cd nfv-config-tools/
+  240  vim 22VM-mlx-start-vswitch.sh 
+  241  history | grep 22
+  242  ./22VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  243  ovs-vsctl show
+  244  vim 22VM-mlx-start-vswitch.sh 
+  245  ./22VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  246  vim 22VM-mlx-start-vswitch.sh 
+  247  ./22VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  248  ovs-vsctl show 
+  249  virsh start guest-11-rhel83-2NUMAnode-node1
+  250  history | grep sys
+  251  grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node0/meminfo;grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node1/meminfo
+  252  ssh -X root@10.16.31.238
+  253  virt-viewer
+  254  ssh -X root@10.16.31.239
+  255  virsh list
+  256  virsh start guest-10-rhel83-2NUMAnode-node0
+  257  ssh -X root@10.16.31.238
+  258  ssh -X root@10.16.31.239
+  259  ssh -X root@10.16.31.238
+  260  grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node0/meminfo;grep -e HugePages_Total -e HugePages_Free /sys/devices/system/node/node1/meminfo
+  261  ssh -X root@10.16.31.238
+  262  ssh -X root@10.16.31.239
+  263  virsh list
+  264  cd ..
+  265  cd dpdk-rhel-perf-tools/2NUMAnodes/
+  266  cp guest-11-rhel83-2NUMAnode-node1.xml guest-12-rhel83-2NUMAnode-node1.xml 
+  267  vim guest-12-rhel83-2NUMAnode-node1.xml
+  268  virsh define guest-12-rhel83-2NUMAnode-node1.xml
+  269  virsh start guest-12-rhel83-2NUMAnode-node1
+  270  virsh list
+  271  virsh list --all
+  272  virsh undefine guest-12rhel83-2NUMAnode-node1
+  273  vim guest-12-rhel83-2NUMAnode-node1.xml
+  274  virsh define guest-12-rhel83-2NUMAnode-node1.xml
+  275  virsh start guest-12-rhel83-2NUMAnode-node1
+  276  pushd ..
+  277  pushd .
+  278  cd ..
+  279  cd nfv-config-tools/
+  280  vim 22VM-mlx-start-vswitch.sh 
+  281  history | grep 22
+  282  ./22VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  283  ovs-vsctl show
+  284  vim 22VM-mlx-start-vswitch.sh 
+  285  ./22VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  286  ovs-vsctl show > see.txt
+  287  vim see.txt 
+  288  vim 22VM-mlx-start-vswitch.sh 
+  289  rm see.txt 
+  290  ./22VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  291  ovs-vsctl show > see.txt
+  292  vim see.txt 
+  293  vim 22VM-mlx-start-vswitch.sh 
+  294  ./22VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  295  ovs-vsctl show > see.txt
+  296  vim see.txt 
+  297  history | grep "virsh start"
+  298  virsh start guest-12-rhel83-2NUMAnode-node1
+  299  virsh list
+  300  virsh destroy 1
+  301  virsh start guest-12-rhel83-2NUMAnode-node1
+  302  virt-viewer
+  303  ssh -X root@10.16.31.236
+  304  cd ..
+  305  cd dpdk-rhel-perf-tools/2NUMAnodes/
+  306  cp guest-12-rhel83-2NUMAnode-node1.xml guest-13-rhel83-2NUMAnode-node1.xml 
+  307  vim guest-12-rhel83-2NUMAnode-node1.xml
+  308  vim guest-13-rhel83-2NUMAnode-node1.xml
+  309  virsh define guest-13-rhel83-2NUMAnode-node1.xml
+  310  virsh start guest-13-rhel83-2NUMAnode-node1
+  311  virt-viewer
+  312  ssh -X root@10.16.31.215
+  313  virsh list
+  314  cp guest-13-rhel83-2NUMAnode-node1.xml guest-14-rhel83-2NUMAnode-node1.xml
+  315  vim guest-14-rhel83-2NUMAnode-node1.xml
+  316  virsh define guest-14-rhel83-2NUMAnode-node1.xml
+  317  virsh start guest-14-rhel83-2NUMAnode-node1
+  318  virt-viewer
+  319  ssh -X root@10.16.31.216
+  320  cp guest-14-rhel83-2NUMAnode-node1.xml guest-15-rhel83-2NUMAnode-node1.xml 
+  321  vim guest-15-rhel83-2NUMAnode-node1.xml
+  322  virsh define guest-15-rhel83-2NUMAnode-node1.xml
+  323  virt-viewer
+  324  virsh start guest-15-rhel83-2NUMAnode-node1
+  325  virt-viewer
+  326  ssh -X root@10.16.31.207
+  327  cp guest-15-rhel83-2NUMAnode-node1.xml guest-16-rhel83-2NUMAnode-node1.xml 
+  328  vim guest-16-rhel83-2NUMAnode-node1.xml
+  329  virsh define guest-16-rhel83-2NUMAnode-node1.xml
+  330  vim guest-16-rhel83-2NUMAnode-node1.xml
+  331  virsh define guest-16-rhel83-2NUMAnode-node1.xml
+  332  virsh start guest-16-rhel83-2NUMAnode-node1
+  333  virt-viewer
+  334  ssh -X root@10.16.31.208
+  335  cp guest-16-rhel83-2NUMAnode-node1.xml guest-17-rhel83-2NUMAnode-node1.xml
+  336  vim guest-17-rhel83-2NUMAnode-node1.xml
+  337  virsh define guest-17-rhel83-2NUMAnode-node1.xml
+  338  virt-viewer
+  339  virsh start guest-17-rhel83-2NUMAnode-node1
+  340  virt-viewer
+  341  ssh -X root@10.16.31.209
+  342  cp guest-17-rhel83-2NUMAnode-node1.xml guest-18-rhel83-2NUMAnode-node1.xml 
+  343  vim guest-18-rhel83-2NUMAnode-node1.xml
+  344  virsh define guest-18-rhel83-2NUMAnode-node1.xml
+  345  virsh start guest-18-rhel83-2NUMAnode-node1
+  346  virt-viewer
+  347  ssh -X root@10.16.31.210
+  348  cp guest-18-rhel83-2NUMAnode-node1.xml guest-19-rhel83-2NUMAnode-node1.xml 
+  349  vim guest-19-rhel83-2NUMAnode-node1.xml
+  350  virsh define guest-19-rhel83-2NUMAnode-node1.xml
+  351  virsh start guest-19-rhel83-2NUMAnode-node1
+  352  virt-viewer
+  353  ssh -X root@10.16.31.203
+  354  cp guest-19-rhel83-2NUMAnode-node1.xml guest-20-rhel83-2NUMAnode-node1.xml 
+  355  vim guest-20-rhel83-2NUMAnode-node1.xml
+  356  virsh define guest-20-rhel83-2NUMAnode-node1.xml
+  357  virsh start guest-20-rhel83-2NUMAnode-node1
+  358  virt-viewer
+  359  ssh -X root@10.16.31.195
+  360  cp guest-20-rhel83-2NUMAnode-node1.xml guest-21-rhel83-2NUMAnode-node1.xml 
+  361  vim guest-21-rhel83-2NUMAnode-node1.xml
+  362  virsh define guest-21-rhel83-2NUMAnode-node1.xml
+  363  virsh start guest-21-rhel83-2NUMAnode-node1
+  364  virt-viewer
+  365  ssh -X root@10.16.31.196
+  366  ls
+  367  cd ..
+  368  cd nfv-config-tools/
+  369  ls
+  370  cp fix-affinity-2NUMAnodes-11VMs-PV-VP.sh fix-affinity-2NUMAnodes-22VMs-PV-VP.sh
+  371  vim fix-affinity-2NUMAnodes-22VMs-PV-VP.sh
+  372  cat /proc/cmdline 
+  373  cd /etc/default
+  374  vim grub 
+  375  htop
+  376  numactl -H
+  377  vim grub 
+  378  cd /etc/tuned/
+  379  vim cpu-partitioning-variables.conf 
+  380  cd /opt/nfv-config-tools/
+  381  vim fix-affinity-2NUMAnodes-22VMs-PV-VP.sh 
+  382  ./fix-affinity-2NUMAnodes-22VMs-PV-VP.sh
+  383  history | grep git
+  384  git add --all
+  385  git commit -am "Adding support for testing 22VMs"
+  386  git push
+  387  ./check_vm_booted.sh guest-0-rhel83-2NUMAnode-node0
+  388  ssh -X root@10.16.31.136
+  389  virsh list --all | guest-0
+  390  virsh list --all | grep "guest-0"
+  391  ssh -X root@10.16.31.136
+  392  cd /var/log/libvirt/qemu/
+  393  ls -ltra
+  394  vim guest-11-rhel83-2NUMAnode-node1.log
+  395  cd ~
+  396  virsh list --all
+  397  virsh start guest-0-rhel83-2NUMAnode-node0
+  398  history | grep check
+  399  cd /opt/nfv-config-tools/
+  400  virsh start guest-1-rhel83-2NUMAnode-node0
+  401  ./check_vm_booted.sh guest-1-rhel83-2NUMAnode-node0
+  402  ssh -X root@10.16.31.34
+  403  cd /opt/nfv-config-tools/
+  404  virsh start guest-8-rhel83-2NUMAnode-node0
+  405  ./check_vm_booted.sh guest-8-rhel83-2NUMAnode-node0
+  406  ssh -X root@10.16.31.186
+  407  cd /opt/nfv-config-tools/
+  408  virsh start guest-17-rhel83-2NUMAnode-node1
+  409  ssh -X root@10.16.31.209
+  410  cd /opt/nfv-config-tools/
+  411  ./check_vm_booted.sh guest-11-rhel83-2NUMAnode-node1
+  412  virsh start guest-12-rhel83-2NUMAnode-node1
+  413  ./check_vm_booted.sh guest-12-rhel83-2NUMAnode-node1
+  414  ssh -X root@10.16.31.236
+  415  cd /opt/nfv-config-tools/
+  416  virsh start guest-5-rhel83-2NUMAnode-node0
+  417  ./check_vm_booted.sh guest-5-rhel83-2NUMAnode-node0
+  418  ssh -X root@10.16.31.128
+  419  cd /opt/nfv-config-tools/
+  420  virsh start guest-16-rhel83-2NUMAnode-node1
+  421  ssh -X root@10.16.31.208
+  422  cd /opt/nfv-config-tools/
+  423  virsh start guest-3-rhel83-2NUMAnode-node0
+  424  ./check_vm_booted.sh guest-3-rhel83-2NUMAnode-node0
+  425  ssh -X root@10.16.31.129
+  426  cd /opt/nfv-config-tools/
+  427  virsh start guest-13-rhel83-2NUMAnode-node1
+  428  ./check_vm_booted.sh guest-13-rhel83-2NUMAnode-node1
+  429  ssh -X root@10.16.31.215
+  430  cd /opt/nfv-config-tools/
+  431  virsh start guest-4-rhel83-2NUMAnode-node0
+  432  ./check_vm_booted.sh guest-4-rhel83-2NUMAnode-node0
+  433  ssh -X root@10.16.31.26
+  434  cd /opt/nfv-config-tools/
+  435  virsh start guest-10-rhel83-2NUMAnode-node0
+  436  ./check_vm_booted.sh guest-10-rhel83-2NUMAnode-node0
+  437  ssh -X root@10.16.31.238
+  438  cd /opt/nfv-config-tools/
+  439  virsh start guest-11-rhel83-2NUMAnode-node0
+  440  virsh start guest-11-rhel83-2NUMAnode-node1
+  441  ssh -X root@10.16.31.239
+  442  ls
+  443  cd /opt/
+  444  cd nfv-config-tools/
+  445  ls
+  446  git diff
+  447  git add --all
+  448  git commit -am "new cpu list for 2 NUMA nodes"
+  449  git push
+  450  virsh list
+  451  ls -ltra
+  452  cd /opt/nfv-config-tools/
+  453  ls
+  454  ls -ltra
+  455  cat shutdown.sh 
+  456  virsh list
+  457  vim shutdown.sh 
+  458  ./shutdown.sh 
+  459  virsh list
+  460  virsh list --all
+  461  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  462  htop
+  463  reboot
+  464  cd /opt/images/
+  465  ls
+  466  ls -ltra
+  467  scp guest-0-RHEL83-1NUMAnode.qcow2 root@perf158:/opt/images/.
+  468  rpm -qa | grep openvswitch
+  469  exit
+  470  uname -a
+  471  cat /etc/redhat-release 
+  472  history | grep cache
+  473  cd /opt/dpdk-rhel-perf-tools/
+  474  ls
+  475  cd ..
+  476  cd install-tools/
+  477  ls
+  478  scp install-tools.sh root@perf158:/opt/install-tools/.
+  479  cd ..
+  480  ls
+  481  cd test-bed-configuration/
+  482  ls
+  483  history | grpe qemu
+  484  history | grep qemu
+  485  numactl -H
+  486  cat /proc/cmdline 
+  487  htop
+  488  cd /opt/nfv-config-tools/
+  489  ls
+  490  virsh list --all
+  491  virsh dumpxml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  492  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  493  history | grep 1VM
+  494  virsh list
+  495  ./1VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  496  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  497  ssh -X root@10.16.31.136
+  498  virsh list
+  499  reboot
+  500  ip l
+  501  ethtool -i ens4f0
+  502  ethtool -i ens3f1
+  503  ethtool -i ens3f0
+  504  ip l
+  505  ip link set dev ens3f0 up
+  506  ip l
+  507  history | grep testpmd
+  508  cat /etc/default/grub 
+  509  history | grep mk
+  510  ls /opt/
+  511  cd /opt/nfv-config-tools/
+  512  scp * root@perf158:/opt/nfv-config-tools/.
+  513  vim 1VM-mlx-start-vswitch.sh 
+  514  history | grep 1VM
+  515  history | grep sys
+  516  ls
+  517  scp -r utils/ root@perf158:/opt/nfv-config-tools/.
+  518  virsh list --all
+  519  cd /etc/sysconfig/network-scripts/
+  520  ls
+  521  ls -ltra
+  522  scp ifcfg-br0 root@perf158:/etc/sysconfig/network-scripts/.
+  523  cat ifcfg-eno1
+  524  cat ifcfg-br0
+  525  ip addr
+  526  virsh list
+  527  history | grep own
+  528  cd /tmp/
+  529  chown root:qemu vm0-vhost-user-0-n0
+  530  ls
+  531  ls -ltra
+  532  cd /opt/nfv-config-tools/
+  533  virsh list --all
+  534  cd /etc/
+  535  cd .
+  536  cd ..
+  537  cd /etc/yum.repos.d/
+  538  ls
+  539  dnf whatprovides qemu-kvm
+  540  dnf whatprovides qemu-kvm | grep "5.1"
+  541  ls
+  542  ls rhel8_*
+  543  scp rhel8_* root@perf158:/etc/yum.repos.d/.
+  544  ls -ltra
+  545  scp *.repo root@perf158:/etc/yum.repos.d/.
+  546  scp rhel8_* root@perf158:/etc/yum.repos.d/.
+  547  ip l
+  548  ethtool -i ens3f1
+  549  ip l | grep end3
+  550  ip l | grep ens3
+  551  scp *.repo root@perf158:/etc/yum.repos.d/.
+  552  more /opt/install-tools/install-tools.sh 
+  553  ls
+  554  ls /etc/pki/
+  555  ls /etc/pki/rpm-gpg/
+  556  dnf whatprovides qemu-kvm
+  557  rpm -qa | grep qemu-kvm
+  558  history | grep manager
+  559  history | grep dnf
+  560  ls /opt/qemu-kvm/
+  561  cd /
+  562  cd opt/qemu-kvm/
+  563  cd ..
+  564  scp -r qemu-kvm/ root@perf158:/opt/.
+  565  history | qemu
+  566  history | grep qemu
+  567  cd test-bed-configuration/
+  568  ls
+  569  cd ..
+  570  scp -r test-bed-configuration/ root@perf158:/opt/.
+  571  history | grep machine
+  572  history | grep mach
+  573  history | grep qemu
+  574  uname -a
+  575  cat /etc/redhat-release 
+  576  cd /etc/sysconfig/
+  577  cd network-scripts/
+  578  cat ifcfg-eno1
+  579  cd /opt/
+  580  scp -r install-tools/ root@perf158:/opt/.
+  581  vim ~/.ssh/known_hosts 
+  582  scp -r install-tools/ root@perf158:/opt/.
+  583  ls
+  584  cd test-bed-configuration/
+  585  cd ..
+  586  scp -r qemu-kvm/ root@perf158:/opt/.
+  587  cd qemu-kvm/
+  588  ls
+  589  dnf install *
+  590  rpm -qa | grep qemu-kvm
+  591  rpm -qa | grep dpdk
+  592  cat /proc/cmdline 
+  593  history | grep mk
+  594  cd ..
+  595  cd install-tools/
+  596  grep ssh install-tools.sh 
+  597  dnf whatprovides htop
+  598  cd ..
+  599  history | grep scp
+  600  scp -r test-bed-configuration/ root@perf158:/opt/.
+  601  history | grep scp
+  602  scp -r qemu-kvm/ root@perf158:/opt/.
+  603  cd /etc/sysconfig/network-scripts/
+  604  ls
+  605  scp ifcfg-br0 root@perf158:/etc/sysconfig/network-scripts/.
+  606  cat ifcfg-br0 
+  607  cat ifcfg-eno1
+  608  cd ~
+  609  cd /opt/nfv-config-tools/
+  610  ls -ltra
+  611  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  612  cd ..
+  613  scp -r nfv-config-tools/ root@perf158:/opt/.
+  614  history | grep 1VM
+  615  ls
+  616  cd nfv-config-tools/
+  617  ls
+  618  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  619  ./1VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  620  ls
+  621  virsh list --all
+  622  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  623  virt-viewer
+  624  history | grep mk
+  625  locate cpu-partitioning-variables.conf
+  626  vim /etc/tuned/cpu-partitioning-variables.conf
+  627  vim 1VM-mlx-start-vswitch.sh 
+  628  history
+  629  ./1VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  630  cd ~
+  631  ls -ltra
+  632  ls -ltra /opt/images/guest-0-RHEL83-2NUMAnode-node0.qcow2
+  633  df .
+  634  df -h
+  635  virsh define rhel83.xml
+  636  ovs-vsctl show
+  637  vim /var/log/openvswitch/ovs-vswitchd.log
+  638  virsh start rhel83 
+  639  ping 10.16.31.136
+  640  ssh -X root@10.16.31.136
+  641  vim .ssh/known_hosts 
+  642  ssh -X root@10.16.31.136
+  643  cp rhel83.xml rhel83.xml.good
+  644  virsh undefine rhel83 
+  645  virsh list --all
+  646  virsh dumpxml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient | more
+  647  vim rhel83.xml
+  648  virsh define rhel83.xml
+  649  virsh start rhel83 
+  650  ssh -X root@10.16.31.136
+  651  vim .ssh/known_hosts 
+  652  ssh -X root@10.16.31.136
+  653  virsh list
+  654  virsh list --all
+  655  virsh dumpxml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  656  cd /opt/nfv-config-tools/
+  657  virsh list --all
+  658  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  659  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  660  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  661  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  662  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  663  vimdiff ~/rhel83.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  664  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  665  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  666  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  667  vimdiff ~/rhel83.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  668  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  669  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  670  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  671  vimdiff ~/rhel83.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  672  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  673  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  674  vimdiff ~/rhel83.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  675  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  676  vimdiff ~/rhel83.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  677  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  678  vimdiff ~/rhel83.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  679  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  680  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  681  ssh -X root@10.16.31.136
+  682  ls -ltra
+  683  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml /opt/dpdk-rhel-perf-tools/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml 
+  684  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  685  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  686  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  687  ssh -X root@10.16.31.136
+  688  cd ..
+  689  history
+  690  cd dpdk-rhel-perf-tools/
+  691  cp guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml
+  692  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml
+  693  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuser
+  694  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  695  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml
+  696  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml
+  697  virsh list --all
+  698  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  699  vim guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml
+  700  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml
+  701  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  702  ssh -X root@10.16.31.136
+  703  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  704  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml /opt/nfv-config-tools/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  705  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  706  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  707  ssh -X root@10.16.31.136
+  708  virsh list
+  709  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  710  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml /opt/nfv-config-tools/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  711  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  712  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  713  ssh -X root@10.16.31.136
+  714  virsh list
+  715  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  716  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml /opt/nfv-config-tools/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  717  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  718  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml /opt/nfv-config-tools/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  719  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  720  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  721  ssh -X root@10.16.31.136
+  722  virsh list
+  723  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  724  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml 
+  725  virsh define guest-0-rhel83-1NUMAnode-iommu
+  726  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  727  ssh -X root@10.16.31.136
+  728  virsh list
+  729  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  730  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml /opt/nfv-config-tools/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  731  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  732  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  733  ssh -X root@10.16.31.136
+  734  virsh list
+  735  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  736  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml /opt/nfv-config-tools/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  737  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  738  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  739  ssh -X root@10.16.31.136
+  740  virsh list
+  741  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  742  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml /opt/nfv-config-tools/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  743  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  744  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  745  ssh -X root@10.16.31.136
+  746  virsh list
+  747  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  748  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml /opt/nfv-config-tools/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  749  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  750  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  751  ssh -X root@10.16.31.136
+  752  virsh list
+  753  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  754  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml /opt/nfv-config-tools/guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  755  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  756  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  757  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  758  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  759  ssh -X root@10.16.31.136
+  760  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  761  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  762  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  763  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  764  ssh -X root@10.16.31.136
+  765  virsh list
+  766  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  767  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  768  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  769  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  770  ssh -X root@10.16.31.136
+  771  virsh list
+  772  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  773  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  774  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  775  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  776  ssh -X root@10.16.31.136
+  777  virsh list
+  778  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  779  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  780  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  781  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  782  ssh -X root@10.16.31.136
+  783  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  784  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  785  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  786  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  787  ssh -X root@10.16.31.136
+  788  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken 
+  789  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  790  virsh list --all
+  791  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  792  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  793  ssh -X root@10.16.31.136
+  794  virsh list
+  795  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient
+  796  virsh list --all
+  797  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  798  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  799  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  800  ssh -X root@10.16.31.136
+  801  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  802  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  803  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  804  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  805  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  806  ssh -X root@10.16.31.136
+  807  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  808  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  809  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  810  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  811  ssh -X root@10.16.31.136
+  812  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  813  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  814  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  815  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  816  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  817  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  818  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  819  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  820  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  821  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  822  ssh -X root@10.16.31.136
+  823  virsh list
+  824  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  825  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  826  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  827  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  828  ls -ltra /tmp/
+  829  virsh list
+  830  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  831  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  832  vimdiff guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-1NUMAnode-iommu-vhostuserclient.xml
+  833  virsh define guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml 
+  834  virsh start guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  835  ssh -X root@10.16.31.136
+  836  history | grep virsh
+  837  updatedb
+  838  locate rhel83
+  839  .xml
+  840  locate rhel83.xml
+  841  cd ~
+  842  vimdiff rhel83.xml rhel83.xml.good 
+  843  history | grep rhel83
+  844  cd /opt/dpdk-rhel-perf-tools/
+  845  ls -ltra
+  846  cp guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken.xml guest-0-rhel83-iommu-minimum.xml
+  847  vim guest-0-rhel83-iommu-minimum.xml
+  848  virsh list
+  849  virsh define guest-0-rhel83-iommu-minimum.xml
+  850  vim guest-0-rhel83-iommu-minimum.xml
+  851  virsh start guest-0-rhel83-iommu-minimum
+  852  vim guest-0-rhel83-iommu-minimum.xml
+  853  ls -ltra
+  854  virsh list --all
+  855  virsh undefine guest-0-rhel83-1NUMAnode-iommu-minimum
+  856  virsh undefine guest-0-rhel83-1NUMAnode-iommu-vhostuserclient-broken
+  857  ls -ltra
+  858  virsh define guest-0-rhel83-iommu-minimum.xml
+  859  virsh start guest-0-rhel83-iommu-minimum
+  860  ssh -X root@10.16.31.136
+  861  vim guest-0-rhel83-iommu-minimum.xml 
+  862  scp guest-0-rhel83-iommu-minimum.xml root@perf158:/root/.
+  863  virsh list
+  864  reboot
+  865  cd /opt/
+  866  ls
+  867  cd qemu-kvm/
+  868  ls
+  869  pushd .
+  870  cd ..
+  871  cd nfv-config-tools/
+  872  grep kill *
+  873  killall -q -w ovs-vswitchd
+  874  killall -q -w ovsdb-server
+  875  dnf whatprovides qemu-kvm
+  876  popd
+  877  dnf uninstall *
+  878  ls
+  879  dnf uninstall qemu-img-5.1.0-14.module+el8.3.0+8790+80f9c6d8.1.x86_64.rpm
+  880  dnf remove *
+  881  dnf remove qemu-kvm-5.1.0-14.module+el8.3.0+8790+80f9c6d8.1.x86_64.rpm
+  882  dnf remove qemu-kvm-core-5.1.0-14.module+el8.3.0+8790+80f9c6d8.1.x86_64.rpm
+  883  dnf whatprovides qemu-kvm | grep 4
+  884  numactl -H
+  885  ip l
+  886  ethtool -i ens3f0
+  887  history | grep 1VM
+  888  virsh list --all
+  889  ls
+  890  cd /opt/nfv-config-tools/
+  891  updatedb
+  892  locate guest-0-rhel83-iommu-minimum
+  893  cd /opt/dpdk-rhel-perf-tools
+  894  cp guest-0-rhel83-iommu-minimum.xml guest-0-rhel83-iommu-minimum-4NUMA.xml
+  895  vim guest-0-rhel83-iommu-minimum-4NUMA.xml
+  896  lstopo-no-graphics
+  897  numactl -H
+  898  htop
+  899  cd /etc/default/
+  900  vim grub 
+  901  cat grub 
+  902  history | grep mk
+  903  grub2-mkconfig -o /boot/grub2/grub.cfg
+  904  cd /etc/tuned/
+  905  vim cpu-partitioning-variables.conf 
+  906  reboot
+  907  cat /proc/cmdline 
+  908  tuned-adm off
+  909  dracut -f
+  910  reboot
+  911  cat /proc/cmdline 
+  912  tuned-adm profile cpu-partitioning 
+  913  reboot
+  914  cat /proc/cmdline 
+  915  htop
+  916  numactl -H
+  917  numactl -m
+  918  numastat -m
+  919  cd /opt/dpdk-rhel-perf-tools/
+  920  ls -ltra
+  921  vim guest-0-rhel83-iommu-minimum-4NUMA.xml
+  922  numactl -H
+  923  htop
+  924  vim guest-0-rhel83-iommu-minimum-4NUMA.xml
+  925  mkdir 4NUMA
+  926  mv guest-0-rhel83-iommu-minimum-4NUMA.xml 4NUMA/.
+  927  cd 4NUMA/
+  928  vim guest-0-rhel83-iommu-minimum-4NUMA.xml 
+  929  history | grep dmidecode
+  930  dmidecode -t memory
+  931  dmidecode -t memory | grep 16
+  932  poweroff
+  933  numastat -m
+  934  cat /proc/meminfo | more
+  935  more /proc/meminfo 
+  936  dmidecode -t memory | grep 16
+  937  dnf whatprovides qemu-kvm
+  938  dnf install qemu-kvm-15:4.2.0-34.module+el8.3
+  939  dnf install qemu-kvm-4.2.0-34.module+el8.3
+  940  dnf install qemu-kvm-4.2.0-34
+  941  dnf install qemu-kvm
+  942  ls
+  943  cd /opt/dpdk-rhel-perf-tools/
+  944  ls
+  945  ls -ltra
+  946  cd 4NUMA/
+  947  ls
+  948  cp guest-0-rhel83-iommu-minimum-4NUMA.xml guest-0-rhel83-iommu-minimum-4NUMA-TEST.xml
+  949  vim guest-0-rhel83-iommu-minimum-4NUMA-TEST.xml
+  950  cd /opt/dpdk-rhel-perf-tools/
+  951  ls
+  952  cd ..
+  953  cd install-tools/
+  954  more install-tools.sh 
+  955  dnf remove qemu-kvm
+  956  dnf install qemu-kvm
+  957  cd /opt/nfv-config-tools/
+  958  history | grep 1VM
+  959  ./1VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  960  virsh list --all
+  961  virsh start guest-0-rhel83-iommu-minimum
+  962  cd ..
+  963  cd dpdk-rhel-perf-tools/
+  964  cd 4NUMA/
+  965  ls
+  966  virsh define guest-0-rhel83-iommu-minimum-4NUMA-TEST.xml
+  967  dnf remove qemu-kvm
+  968  cd /opt/qemu-kvm/
+  969  dnf install *
+  970  y
+  971  dnf install *
+  972  cd ..
+  973  cd dpdk-rhel-perf-tools/4NUMA/
+  974  ls
+  975  virsh define guest-0-rhel83-iommu-minimum-4NUMA-TEST.xml
+  976  cat /proc/cmdline 
+  977  virsh list
+  978  rpm -qa | grep qemu-kvm
+  979  cd /var/log/libvirt/qemu/
+  980  ls
+  981  ls -ltra
+  982  vim guest-0-rhel83-iommu-minimum.log
+  983  ls
+  984  ovs-vsctl show
+  985  ls
+  986  cd /opt/qemu-kvm/
+  987  dnf install *
+  988  cd /tmp/
+  989  ls
+  990  reboot
+  991  cd /opt/nfv-config-tools/
+  992  history
+  993  ./1VM-mlx-start-vswitch.sh --devices=0000:c4:00.0,0000:c4:00.1 --dataplane=dpdk --dpdk-nic-kmod=mlx5_core --switch=ovs --topology=pv,vp --use-ht=y --numa-mode=preferred --switch-mode=l2-bridge
+  994  history
+  995  cd /opt/dpdk-rhel-perf-tools/4NUMA/
+  996  ls
+  997  virsh define guest-0-rhel83-iommu-minimum-4NUMA-TEST.xml
+  998  ls /etc/yum.repos.d/
+  999  dnf update
+ 1000  reboot
+ 1001  cd /opt/dpdk-rhel-perf-tools/4NUMA/
+ 1002  ls
+ 1003  virsh define guest-0-rhel83-iommu-minimum-4NUMA-TEST.xml
+ 1004  ls
+ 1005  cd ..
+ 1006  ls -ltra
+ 1007  cp guest-0-rhel83-iommu-minimum.xml ../nfv-config-tools/.
+ 1008  ls fix-affinity-*
+ 1009  cp fix-affinity-* ../nfv-config-tools/.
+ 1010  cp 27VM-start-vswitch.sh ../nfv-config-tools/.
+ 1011  cd ../install-tools/
+ 1012  cp install-tools.sh ../nfv-config-tools/.
+ 1013  cd ..
+ 1014  ls
+ 1015  cd IOMMU-viewer/
+ 1016  ls
+ 1017  more iommu_viewer.sh 
+ 1018  cd ..
+ 1019  ls
+ 1020  cd test-bed-configuration/
+ 1021  git diff
+ 1022  cd ..
+ 1023  cd nfv-config-tools/
+ 1024  history > history.txt

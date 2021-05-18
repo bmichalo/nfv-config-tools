@@ -710,7 +710,7 @@ ovs) #switch configuration
 			# Enable Vhost IOMMU feature which restricts memory that a virtio device can access.  
 			# Setting 'vfio-iommu-support' to 'true' enable vhost IOMMU support for all vhost ports 
 			# 
-			#$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:vhost-iommu-support=true
+			$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:vhost-iommu-support=true
 
 			#
 			# Note both dpdk-socket-mem and dpdk-lcore-mask should be set before dpdk-init is set to 
