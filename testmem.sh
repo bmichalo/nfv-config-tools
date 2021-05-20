@@ -5,8 +5,8 @@ nps=$( numactl -H | grep available | awk '{print $2}' )
 outfile="outfileMemProfileNPS$nps"
 echo "$HOSTNAME" | tee -a $outfile
 echo "NPS = $nps" | tee -a $outfile
-echo "uname -r" | tee -a $outfile
-echo "cat /etc/redhat-release" | tee -a $outfile
+echo "$( uname -r )" | tee -a $outfile
+echo "$( cat /etc/redhat-release )" | tee -a $outfile
 echo "==============================================================================================================================" | tee -a $outfile
 echo "sysbench --test=memory --memory-block-size=1K --memory-scope=global --memory-total-size=100G --memory-oper=read run" | tee -a $outfile
 sysbench --test=memory --memory-block-size=1K --memory-scope=global --memory-total-size=100G --memory-oper=read run | tee -a $outfile
