@@ -1,13 +1,13 @@
 <domain type='kvm' id='1'>
-  <name>guest-0-rhel83-nps1-new</name>
-  <uuid>aff9ebc7-7fc2-4a4f-829c-c82025b8594a</uuid>
+  <name>guest-0-rhel83-nps1-iommu-256G</name>
+  <uuid>aff9ebc7-7fc2-4a4f-829c-c82025b80000</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://redhat.com/rhel/8.3"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit='KiB'>8388608</memory>
-  <currentMemory unit='KiB'>8388608</currentMemory>
+  <memory unit='KiB'>4194304</memory>
+  <currentMemory unit='KiB'>4194304</currentMemory>
   <memoryBacking>
     <hugepages>
       <page size='1048576' unit='KiB' nodeset='0'/>
@@ -15,10 +15,10 @@
   </memoryBacking>
   <vcpu placement='static'>4</vcpu>
   <cputune>
-    <vcpupin vcpu='0' cpuset='32'/>
-    <vcpupin vcpu='1' cpuset='96'/>
-    <vcpupin vcpu='2' cpuset='33'/>
-    <vcpupin vcpu='3' cpuset='97'/>
+    <vcpupin vcpu='0' cpuset='2'/>
+    <vcpupin vcpu='1' cpuset='66'/>
+    <vcpupin vcpu='2' cpuset='3'/>
+    <vcpupin vcpu='3' cpuset='67'/>
   </cputune>
   <resource>
     <partition>/machine</partition>
@@ -36,7 +36,7 @@
   <cpu mode='host-passthrough' check='none'>
     <feature policy='require' name='tsc-deadline'/>
     <numa>
-      <cell id='0' cpus='0-3' memory='8388608' unit='KiB' memAccess='shared'/>
+      <cell id='0' cpus='0-3' memory='4194304' unit='KiB' memAccess='shared'/>
     </numa>
   </cpu>
   <clock offset='utc'>
