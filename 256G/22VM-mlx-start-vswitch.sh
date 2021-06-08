@@ -293,7 +293,7 @@ function get_dev_desc() {
 
 
 # Process options and arguments
-opts=$(getopt -q -o i:c:t:r:m:p:M:S:C:o --longoptions "number-of-guests:,no-kill:,vhost-affinity:,numa-mode:,desc-override:,vhost_devices:,pci-devices:,devices:,nr-queues:,use-ht:,topology:,dataplane:,switch:,switch-mode:,testpmd-path:,dpdk-nic-kmod:,prefix:,pci-desc-override:,print-config" -n "getopt.sh" -- "$@")
+opts=$(getopt -q -o i:c:t:r:m:p:M:S:C:o --longoptions "no-kill,vhost-affinity:,numa-mode:,desc-override:,vhost_devices:,pci-devices:,devices:,nr-queues:,use-ht:,topology:,dataplane:,switch:,switch-mode:,testpmd-path:,dpdk-nic-kmod:,prefix:,pci-desc-override:,print-config" -n "getopt.sh" -- "$@")
 if [ $? -ne 0 ]; then
 	printf -- "$*\n"
 	printf "\n"
@@ -474,14 +474,6 @@ while true; do
 			log "prefix: [$prefix]"
 		fi
 		;;
-		--number-of-guests)
-		shift
-		if [ -n "$1" ]; then
-			number_of_guests="$1"
-			shift
-			log "number_of_guests: [$number_of_guests]"
-		fi
-		;;
 		--print-config)
 		shift
 		echo ""
@@ -502,7 +494,6 @@ while true; do
 		echo "cpu_usage_file = $cpu_usage_file"
 		echo "vhost_affinity = $vhost_affinity"
 		echo "no_kill = $no_kill"
-		echo "number_of_guests = $number_of_guests"
 		echo ""
 		;;
 		--)
@@ -719,7 +710,7 @@ ovs) #switch configuration
 			# Enable Vhost IOMMU feature which restricts memory that a virtio device can access.  
 			# Setting 'vfio-iommu-support' to 'true' enable vhost IOMMU support for all vhost ports 
 			# 
-			$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:vhost-iommu-support=true
+			#$ovs_bin/ovs-vsctl --no-wait set Open_vSwitch . other_config:vhost-iommu-support=true
 
 			#
 			# Note both dpdk-socket-mem and dpdk-lcore-mask should be set before dpdk-init is set to 
@@ -867,9 +858,9 @@ ovs) #switch configuration
 			# create the bridges/ports with 1 phys dev and 1 virt dev per bridge, to be used for 1 VM to forward packets
 			vhost_ports=""
 			ifaces=""
-			log "number_of_guests = $number_of_guests"
+			number_of_guests=22
 			let number_of_guests_upper_limit=$number_of_guests-1
-			log "number_of_guests_upper_limit = $number_of_guests_upper_limit"
+			echo "number_of_guests_upper_limit = $number_of_guests_upper_limit"
 			for i in `seq 0 $number_of_guests`; do
 				if [ $i -eq 0 ]; then
 					phy_br="phy-br-$i"
@@ -887,12 +878,12 @@ ovs) #switch configuration
 					fi
 
 					if [ "$vhost_affinity" == "local" ]; then
-						vhost_port="vm0-vhost-user-$i-n$pci_node"
+						vhost_port="vm$i-vhost-user-$i-n$pci_node"
 						log "vhost_port = $vhost_port"
 					else # use a non-local node
 						remote_pci_nodes=`sub_from_list $node_list $pci_node`
 						remote_pci_node=`echo $remote_pci_nodes | awk -F, '{print $1}'`
-						vhost_port="vm0-vhost-user-$i-n$remote_pci_node"
+						vhost_port="vm$i-vhost-user-$i-n$remote_pci_node"
 					fi
 
 					log "vhost_port: $vhost_port"
@@ -927,10 +918,11 @@ ovs) #switch configuration
 
 					$ovs_bin/ovs-ofctl del-flows $phy_br
 					set_ovs_bridge_mode $phy_br ${switch_mode}
-				elif [ $i -eq 1 ]; then
-					phy_br="phy-br-$i"
+
+				elif [ $i -eq $number_of_guests ]; then
+					phy_br="phy-br-$number_of_guests"
 					log "phy_br = $phy_br"
-					pci_dev_index=$(( i + 1 ))
+					pci_dev_index=$(( 1 + 1 ))
 					log "pci_dev_index = $pci_dev_index"
 					pci_dev=`echo ${devs} | awk -F, "{ print \\$${pci_dev_index}}"`
 					log "pci_dev (in progress) = $pci_dev"
@@ -943,12 +935,12 @@ ovs) #switch configuration
 					fi
 
 					if [ "$vhost_affinity" == "local" ]; then
-						vhost_port="vm$number_of_guests_upper_limit-vhost-user-$i-n$pci_node"
+						vhost_port="vm$number_of_guests_upper_limit-vhost-user-1-n1"
 						log "vhost_port = $vhost_port"
 					else # use a non-local node
 						remote_pci_nodes=`sub_from_list $node_list $pci_node`
 						remote_pci_node=`echo $remote_pci_nodes | awk -F, '{print $1}'`
-						vhost_port="vm0-vhost-user-$i-n$remote_pci_node"
+						vhost_port="vm$i-vhost-user-$i-n$remote_pci_node"
 					fi
 
 					log "vhost_port: $vhost_port"
@@ -956,7 +948,7 @@ ovs) #switch configuration
 					log "vhost_ports = $vhost_ports"
 
 					if echo $ovs_ver | grep -q "^2\.7\|^2\.8\|^2\.9\|^2\.10\|^2\.11\|^2\.12\|^2\.13"; then
-						phys_port_name="dpdk-${i}"
+						phys_port_name="dpdk-1"
 						phys_port_args="options:dpdk-devargs=${pci_dev}"
 						log "phys_port_name = $phys_port_name"
 						log "phys_port_args = $phys_port_args"
@@ -983,22 +975,20 @@ ovs) #switch configuration
 
 					$ovs_bin/ovs-ofctl del-flows $phy_br
 					set_ovs_bridge_mode $phy_br ${switch_mode}
-
 				else
 					log "i = $i"
 					phy_br="phy-br-$i"
 					log "phy_br = $phy_br"
 
-					first_guest_machine_id=$(( i - 2 ))
-					second_guest_machine_id=$(( i - 1 ))
+					let guest_machine_id=$i-1
 
-					#second=$(( i + 1 ))
-					vhost_port="vm$first_guest_machine_id-vhost-user-1-n$pci_node"
+					if [ $i -lt 12 ]; then
+						vhost_port="vm$guest_machine_id-vhost-user-1-n$pci_node"
+					else
+						vhost_port="vm$guest_machine_id-vhost-user-1-n1"
+					fi
 
-					log "first_guest_machine_id = $first_guest_machine_id"
-					log "second_guest_machine_id = $second_guest_machine_id"
-					log "vhost_port: $vhost_port"
-					log "pci_node: $pci_node"
+					log "vhost_port = $vhost_port"
 
 					vhost_ports="$vhost_ports,$vhost_port"
 					log "vhost_ports = $vhost_ports"
@@ -1006,29 +996,38 @@ ovs) #switch configuration
 
 					$ovs_bin/ovs-vsctl --if-exists del-br $phy_br
 					$ovs_bin/ovs-vsctl add-br $phy_br -- set bridge $phy_br datapath_type=netdev
+					$ovs_bin/ovs-vsctl add-port $phy_br ${phys_port_name} -- set Interface ${phys_port_name} type=dpdk ${phys_port_args}
+					ifaces="$ifaces,${phys_port_name}"
+					phy_ifaces="$ifaces,${phys_port_name}"
 
 					$ovs_bin/ovs-vsctl add-port $phy_br $vhost_port -- set Interface $vhost_port type=dpdkvhostuserclient options:vhost-server-path=/tmp/$vhost_port
 					ifaces="$ifaces,$vhost_port"
 					vhu_ifaces="$ifaces,$vhost_port"
 
-					vhost_port="vm$second_guest_machine_id-vhost-user-0-n$pci_node"
+					if [ $i -gt 10 ]; then
+						vhost_port="vm$i-vhost-user-0-n1"
+					else
+						vhost_port="vm$i-vhost-user-0-n$pci_node"
+					fi
 
-					log "vhost_port: $vhost_port"
+
+					log "vhost_port = $vhost_port"
+
 					vhost_ports="$vhost_ports,$vhost_port"
 					log "vhost_ports = $vhost_ports"
 
-
 					$ovs_bin/ovs-vsctl add-port $phy_br $vhost_port -- set Interface $vhost_port type=dpdkvhostuserclient options:vhost-server-path=/tmp/$vhost_port
 					ifaces="$ifaces,$vhost_port"
 					vhu_ifaces="$ifaces,$vhost_port"
+
+
+					vhost_ports=`echo $vhost_ports | sed -e 's/^,//'`
+					log "vhost_ports = $vhost_ports"
 
 					$ovs_bin/ovs-ofctl del-flows $phy_br
 					set_ovs_bridge_mode $phy_br ${switch_mode}
 
-				fi
-
-
-
+				fi	
 			done
 
 			ifaces=`echo $ifaces | sed -e s/^,//`
@@ -1038,6 +1037,7 @@ ovs) #switch configuration
 			echo "BILL number_of_guests = $number_of_guests"
 			let ovs_ports=$number_of_guests*2+2
 			echo "BILL ovs_ports = $ovs_ports"
+			exit
 			;;
 		esac
 
