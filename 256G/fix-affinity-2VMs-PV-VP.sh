@@ -12,7 +12,20 @@ echo ""
 ovs-appctl dpif-netdev/pmd-rxq-show
 echo""
 
-ovs-vsctl set Open_vSwitch . other_config:pmd-cpu-mask=260000000000000026
+cpu_list=1,2,5,65,66,69
+
+
+pmd_cpu_mask=0
+for cpu in `echo $cpu_list | sed -e 's/,/ /'g`; do
+        bc_math="$bc_math + 2^$cpu"
+done
+bc_math=`echo $bc_math | sed -e 's/\+//'`
+pmd_cpu_mask=`echo "obase=16; $bc_math" | bc`
+echo "$pmd_cpu_mask"
+binary_pmd_cpu_mask=`echo "ibase=16;obase=2;$pmd_cpu_mask" | bc`
+echo "$binary_pmd_cpu_mask"
+
+ovs-vsctl set Open_vSwitch . other_config:pmd-cpu-mask=$pmd_cpu_mask
 
 # phy-br-0
 iface=dpdk-0

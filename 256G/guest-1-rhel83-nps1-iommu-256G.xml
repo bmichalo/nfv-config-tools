@@ -15,10 +15,10 @@
   </memoryBacking>
   <vcpu placement='static'>4</vcpu>
   <cputune>
-    <vcpupin vcpu='0' cpuset='6'/>
-    <vcpupin vcpu='1' cpuset='70'/>
-    <vcpupin vcpu='2' cpuset='7'/>
-    <vcpupin vcpu='3' cpuset='71'/>
+    <vcpupin vcpu='0' cpuset='3'/>
+    <vcpupin vcpu='1' cpuset='67'/>
+    <vcpupin vcpu='2' cpuset='6'/>
+    <vcpupin vcpu='3' cpuset='70'/>
   </cputune>
   <resource>
     <partition>/machine</partition>

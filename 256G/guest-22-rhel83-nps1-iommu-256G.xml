@@ -1,6 +1,6 @@
 <domain type='kvm' id='1'>
-  <name>guest-3-rhel83-nps1-iommu-256G</name>
-  <uuid>aff9ebc7-7fc2-4a4f-829c-c82025b83333</uuid>
+  <name>guest-22-rhel83-nps1-iommu-256G</name>
+  <uuid>aff9ebc7-7fc2-4a4f-829c-c82025b8f022</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://redhat.com/rhel/8.3"/>
@@ -17,8 +17,8 @@
   <cputune>
     <vcpupin vcpu='0' cpuset='3'/>
     <vcpupin vcpu='1' cpuset='67'/>
-    <vcpupin vcpu='2' cpuset='10'/>
-    <vcpupin vcpu='3' cpuset='74'/>
+    <vcpupin vcpu='2' cpuset='48'/>
+    <vcpupin vcpu='3' cpuset='112'/>
   </cputune>
   <resource>
     <partition>/machine</partition>
@@ -55,7 +55,7 @@
     <emulator>/usr/libexec/qemu-kvm</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' cache='none' io='threads' iommu='on' ats='on'/>
-      <source file='/opt/images/guest-3-RHEL83-nps1-new.qcow2' index='1'/>
+      <source file='/home/images/guest-22-RHEL83-nps1-new.qcow2' index='1'/>
       <backingStore/>
       <target dev='vda' bus='virtio'/>
       <alias name='virtio-disk0'/>
@@ -179,7 +179,7 @@
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
     <interface type='bridge'>
-      <mac address='52:54:00:35:33:8c'/>
+      <mac address='52:54:00:22:ff:ee'/>
       <source bridge='br0'/>
       <target dev='vnet0'/>
       <model type='virtio'/>
@@ -187,18 +187,18 @@
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <interface type='vhostuser'>
-      <mac address='52:54:00:cd:33:9d'/>
-      <source type='unix' path='/tmp/vm3-vhost-user-0-n0' mode='server'/>
-      <target dev='vm3-vhost-user-0-n0'/>
+      <mac address='52:54:00:22:ff:9d'/>
+      <source type='unix' path='/tmp/vm22-vhost-user-0-n0' mode='server'/>
+      <target dev='vm22-vhost-user-0-n0'/>
       <model type='virtio'/>
       <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024' iommu='on' ats='on'/>
       <alias name='net1'/>
       <address type='pci' domain='0x0000' bus='0x10' slot='0x00' function='0x0'/>
     </interface>
     <interface type='vhostuser'>
-      <mac address='52:54:00:52:33:22'/>
-      <source type='unix' path='/tmp/vm3-vhost-user-1-n0' mode='server'/>
-      <target dev='vm3-vhost-user-1-n0'/>
+      <mac address='52:54:00:22:ff:22'/>
+      <source type='unix' path='/tmp/vm22-vhost-user-1-n0' mode='server'/>
+      <target dev='vm22-vhost-user-1-n0'/>
       <model type='virtio'/>
       <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024' iommu='on' ats='on'/>
       <alias name='net2'/>
