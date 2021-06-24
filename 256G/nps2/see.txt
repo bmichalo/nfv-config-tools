@@ -1,0 +1,356 @@
+start-vswitch: LINENO: 339 opts: [ --devices '0000:c4:00.0,0000:c4:00.1' --dataplane 'dpdk' --dpdk-nic-kmod 'mlx5_core' --switch 'ovs' --topology 'pv,vp' --use-ht 'y' --numa-mode 'preferred' --switch-mode 'l2-bridge' --number-of-guests '15' --print-config --]
+start-vswitch: LINENO: 341 Processing options:
+start-vswitch: LINENO: 356 devs: [0000:c4:00.0,0000:c4:00.1]
+start-vswitch: LINENO: 396 dataplane: [dpdk]
+start-vswitch: LINENO: 466 dpdk_nic_kmod: [mlx5_core]
+start-vswitch: LINENO: 428 switch: [ovs]
+start-vswitch: LINENO: 388 topology: [pv,vp]
+start-vswitch: LINENO: 380 use_ht: [y]
+start-vswitch: LINENO: 458 numa_mode: [preferred]
+start-vswitch: LINENO: 439 switch_mode: [l2-bridge]
+start-vswitch: LINENO: 482 number_of_guests: [15]
+
+topology = pv,vp
+queues = 1
+switch = ovs
+switch_mode = l2-bridge
+numa_mode = preferred
+ovs_build = rpm
+dpdk_nic_kmod = mlx5_core
+dataplane = dpdk
+use_ht = y
+testpmd_path = /usr/bin/testpmd
+supported_switches = linuxbridge ovs linuxrouter testpmd
+pci_descriptors = 2048
+pci_desc_override = 
+vhu_desc_override = 
+cpu_usage_file = /var/log/isolated_cpu_usage.conf
+vhost_affinity = local
+no_kill = 0
+number_of_guests = 15
+
+start-vswitch: LINENO: 520 Validating the switch-mode l2-bridge given the switch is ovs...
+start-vswitch: LINENO: 541 switch-mode l2-bridge is valid
+start-vswitch: LINENO: 544 Determining if proper software tools are installed...
+start-vswitch: LINENO: 564 Using OVS from RPM
+start-vswitch: LINENO: 579 devs = 0000:c4:00.0,0000:c4:00.1
+start-vswitch: LINENO: 587 Using PCI device: c4:00.0 Ethernet controller: Mellanox Technologies MT28800 Family [ConnectX-5 Ex]
+start-vswitch: LINENO: 587 Using PCI device: c4:00.1 Ethernet controller: Mellanox Technologies MT28800 Family [ConnectX-5 Ex]
+start-vswitch: LINENO: 597 kernel mod: mlx5_core
+start-vswitch: LINENO: 600 Checking for an existing process using 0000:c4:00.0,0000:c4:00.1
+start-vswitch: LINENO: 603 /sys/bus/pci/devices/0000:c4:00.0/iommu_group
+start-vswitch: LINENO: 605 ../../../../kernel/iommu_groups/68
+start-vswitch: LINENO: 606 iommu_group = 68
+start-vswitch: LINENO: 603 /sys/bus/pci/devices/0000:c4:00.1/iommu_group
+start-vswitch: LINENO: 605 ../../../../kernel/iommu_groups/69
+start-vswitch: LINENO: 606 iommu_group = 69
+start-vswitch: LINENO: 616 stopping ovs
+start-vswitch: LINENO: 620 stopping testpmd
+start-vswitch: LINENO: 632 Initializing devices to use DPDK as the dataplane
+start-vswitch: LINENO: 648 device 0000:c4:00.0 node is 0
+start-vswitch: LINENO: 648 device 0000:c4:00.1 node is 0
+start-vswitch: LINENO: 651 local_socket_mem: 1024
+start-vswitch: LINENO: 654 mem: 1024
+start-vswitch: LINENO: 654 mem: 0
+start-vswitch: LINENO: 667 local_numa_nodes: 0
+start-vswitch: LINENO: 669 local_socket_mem_opt: 1024,0
+start-vswitch: LINENO: 671 all_socket_mem_opt: 1024,1024
+start-vswitch: LINENO: 676 isol cpus_list is 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127
+start-vswitch: LINENO: 677 all-nodes-non-isolated cpus list is 0,32,64,96
+start-vswitch: LINENO: 682 Mellanox adapter in use.  Using kernel module mlx5_core
+start-vswitch: LINENO: 688 Configuring the vswitch: ovs
+start-vswitch: LINENO: 694 ********** Starting OVS (ovs_ver=2.13.4) **********
+start-vswitch: LINENO: 697 Initializing the OVS configuration database at /etc/openvswitch/conf.db using 'ovsdb-tool create'...
+start-vswitch: LINENO: 700 Starting the OVS configuration database process ovsdb-server and connecting to Unix socket /var/run/openvswitch/db.sock...
+start-vswitch: LINENO: 706 Now intialize the OVS database using 'ovs-vsctl --no-wait init' ...
+start-vswitch: LINENO: 710 starting ovs-vswitchd
+start-vswitch: LINENO: 849 ovs_dpdk_interface_0_args[options:dpdk-devargs=0000:c4:00.0]
+start-vswitch: LINENO: 855 ovs_dpdk_interface_1_args[options:dpdk-devargs=0000:c4:00.1]
+start-vswitch: LINENO: 863 configuring ovs with network topology: pv,vp
+start-vswitch: LINENO: 870 number_of_guests = 15
+start-vswitch: LINENO: 872 number_of_guests_upper_limit = 14
+start-vswitch: LINENO: 876 phy_br = phy-br-0
+start-vswitch: LINENO: 878 pci_dev_index = 1
+start-vswitch: LINENO: 880 pci_dev (in progress) = 0000:c4:00.0
+start-vswitch: LINENO: 881 pci_dev = 0000:c4:00.0
+start-vswitch: LINENO: 891 vhost_port = vm0-vhost-user-0-n0
+start-vswitch: LINENO: 898 vhost_port: vm0-vhost-user-0-n0
+start-vswitch: LINENO: 900 vhost_ports = ,vm0-vhost-user-0-n0
+start-vswitch: LINENO: 905 phys_port_name = dpdk-0
+start-vswitch: LINENO: 906 phys_port_args = options:dpdk-devargs=0000:c4:00.0
+start-vswitch: LINENO: 932 phy_br = phy-br-1
+start-vswitch: LINENO: 934 pci_dev_index = 2
+start-vswitch: LINENO: 936 pci_dev (in progress) = 0000:c4:00.1
+start-vswitch: LINENO: 937 pci_dev = 0000:c4:00.1
+start-vswitch: LINENO: 947 vhost_port = vm14-vhost-user-1-n0
+start-vswitch: LINENO: 954 vhost_port: vm14-vhost-user-1-n0
+start-vswitch: LINENO: 956 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0
+start-vswitch: LINENO: 961 phys_port_name = dpdk-1
+start-vswitch: LINENO: 962 phys_port_args = options:dpdk-devargs=0000:c4:00.1
+start-vswitch: LINENO: 988 i = 2
+start-vswitch: LINENO: 990 phy_br = phy-br-2
+start-vswitch: LINENO: 998 first_guest_machine_id = 0
+start-vswitch: LINENO: 999 second_guest_machine_id = 1
+start-vswitch: LINENO: 1000 vhost_port: vm0-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm1-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 3
+start-vswitch: LINENO: 990 phy_br = phy-br-3
+start-vswitch: LINENO: 998 first_guest_machine_id = 1
+start-vswitch: LINENO: 999 second_guest_machine_id = 2
+start-vswitch: LINENO: 1000 vhost_port: vm1-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm2-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 4
+start-vswitch: LINENO: 990 phy_br = phy-br-4
+start-vswitch: LINENO: 998 first_guest_machine_id = 2
+start-vswitch: LINENO: 999 second_guest_machine_id = 3
+start-vswitch: LINENO: 1000 vhost_port: vm2-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm3-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 5
+start-vswitch: LINENO: 990 phy_br = phy-br-5
+start-vswitch: LINENO: 998 first_guest_machine_id = 3
+start-vswitch: LINENO: 999 second_guest_machine_id = 4
+start-vswitch: LINENO: 1000 vhost_port: vm3-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm4-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 6
+start-vswitch: LINENO: 990 phy_br = phy-br-6
+start-vswitch: LINENO: 998 first_guest_machine_id = 4
+start-vswitch: LINENO: 999 second_guest_machine_id = 5
+start-vswitch: LINENO: 1000 vhost_port: vm4-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm5-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 7
+start-vswitch: LINENO: 990 phy_br = phy-br-7
+start-vswitch: LINENO: 998 first_guest_machine_id = 5
+start-vswitch: LINENO: 999 second_guest_machine_id = 6
+start-vswitch: LINENO: 1000 vhost_port: vm5-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm6-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 8
+start-vswitch: LINENO: 990 phy_br = phy-br-8
+start-vswitch: LINENO: 998 first_guest_machine_id = 6
+start-vswitch: LINENO: 999 second_guest_machine_id = 7
+start-vswitch: LINENO: 1000 vhost_port: vm6-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm7-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 9
+start-vswitch: LINENO: 990 phy_br = phy-br-9
+start-vswitch: LINENO: 998 first_guest_machine_id = 7
+start-vswitch: LINENO: 999 second_guest_machine_id = 8
+start-vswitch: LINENO: 1000 vhost_port: vm7-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm8-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 10
+start-vswitch: LINENO: 990 phy_br = phy-br-10
+start-vswitch: LINENO: 998 first_guest_machine_id = 8
+start-vswitch: LINENO: 999 second_guest_machine_id = 9
+start-vswitch: LINENO: 1000 vhost_port: vm8-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm9-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 11
+start-vswitch: LINENO: 990 phy_br = phy-br-11
+start-vswitch: LINENO: 998 first_guest_machine_id = 9
+start-vswitch: LINENO: 999 second_guest_machine_id = 10
+start-vswitch: LINENO: 1000 vhost_port: vm9-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm10-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 12
+start-vswitch: LINENO: 990 phy_br = phy-br-12
+start-vswitch: LINENO: 998 first_guest_machine_id = 10
+start-vswitch: LINENO: 999 second_guest_machine_id = 11
+start-vswitch: LINENO: 1000 vhost_port: vm10-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0,vm10-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm11-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0,vm10-vhost-user-1-n0,vm11-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 13
+start-vswitch: LINENO: 990 phy_br = phy-br-13
+start-vswitch: LINENO: 998 first_guest_machine_id = 11
+start-vswitch: LINENO: 999 second_guest_machine_id = 12
+start-vswitch: LINENO: 1000 vhost_port: vm11-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0,vm10-vhost-user-1-n0,vm11-vhost-user-0-n0,vm11-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm12-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0,vm10-vhost-user-1-n0,vm11-vhost-user-0-n0,vm11-vhost-user-1-n0,vm12-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 14
+start-vswitch: LINENO: 990 phy_br = phy-br-14
+start-vswitch: LINENO: 998 first_guest_machine_id = 12
+start-vswitch: LINENO: 999 second_guest_machine_id = 13
+start-vswitch: LINENO: 1000 vhost_port: vm12-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0,vm10-vhost-user-1-n0,vm11-vhost-user-0-n0,vm11-vhost-user-1-n0,vm12-vhost-user-0-n0,vm12-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm13-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0,vm10-vhost-user-1-n0,vm11-vhost-user-0-n0,vm11-vhost-user-1-n0,vm12-vhost-user-0-n0,vm12-vhost-user-1-n0,vm13-vhost-user-0-n0
+start-vswitch: LINENO: 988 i = 15
+start-vswitch: LINENO: 990 phy_br = phy-br-15
+start-vswitch: LINENO: 998 first_guest_machine_id = 13
+start-vswitch: LINENO: 999 second_guest_machine_id = 14
+start-vswitch: LINENO: 1000 vhost_port: vm13-vhost-user-1-n0
+start-vswitch: LINENO: 1001 pci_node: 0
+start-vswitch: LINENO: 1004 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0,vm10-vhost-user-1-n0,vm11-vhost-user-0-n0,vm11-vhost-user-1-n0,vm12-vhost-user-0-n0,vm12-vhost-user-1-n0,vm13-vhost-user-0-n0,vm13-vhost-user-1-n0
+start-vswitch: LINENO: 1016 vhost_port: vm14-vhost-user-0-n0
+start-vswitch: LINENO: 1018 vhost_ports = ,vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0,vm10-vhost-user-1-n0,vm11-vhost-user-0-n0,vm11-vhost-user-1-n0,vm12-vhost-user-0-n0,vm12-vhost-user-1-n0,vm13-vhost-user-0-n0,vm13-vhost-user-1-n0,vm14-vhost-user-0-n0
+start-vswitch: LINENO: 1035 ifaces = dpdk-0,vm0-vhost-user-0-n0,dpdk-1,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0,vm10-vhost-user-1-n0,vm11-vhost-user-0-n0,vm11-vhost-user-1-n0,vm12-vhost-user-0-n0,vm12-vhost-user-1-n0,vm13-vhost-user-0-n0,vm13-vhost-user-1-n0,vm14-vhost-user-0-n0
+start-vswitch: LINENO: 1037 vhost_ports = vm0-vhost-user-0-n0,vm14-vhost-user-1-n0,vm0-vhost-user-1-n0,vm1-vhost-user-0-n0,vm1-vhost-user-1-n0,vm2-vhost-user-0-n0,vm2-vhost-user-1-n0,vm3-vhost-user-0-n0,vm3-vhost-user-1-n0,vm4-vhost-user-0-n0,vm4-vhost-user-1-n0,vm5-vhost-user-0-n0,vm5-vhost-user-1-n0,vm6-vhost-user-0-n0,vm6-vhost-user-1-n0,vm7-vhost-user-0-n0,vm7-vhost-user-1-n0,vm8-vhost-user-0-n0,vm8-vhost-user-1-n0,vm9-vhost-user-0-n0,vm9-vhost-user-1-n0,vm10-vhost-user-0-n0,vm10-vhost-user-1-n0,vm11-vhost-user-0-n0,vm11-vhost-user-1-n0,vm12-vhost-user-0-n0,vm12-vhost-user-1-n0,vm13-vhost-user-0-n0,vm13-vhost-user-1-n0,vm14-vhost-user-0-n0
+BILL number_of_guests = 15
+BILL ovs_ports = 32
+start-vswitch: LINENO: 1044 using 1 queue(s) per port
+start-vswitch: LINENO: 1055 setting PCI descriptors/queue with 2048
+start-vswitch: LINENO: 1066 using a total of 32 PMD threads
+pmdcpus= 1,65,2,66,3,67,4,68,5,69,6,70,7,71,8,72,9,73,10,74,11,75,12,76,13,77,14,78,15,79,16,80
+start-vswitch: LINENO: 1074 pmd_cpus_list is [1,65,2,66,3,67,4,68,5,69,6,70,7,71,8,72,9,73,10,74,11,75,12,76,13,77,14,78,15,79,16,80]
+start-vswitch: LINENO: 1075 pmd_cpu_mask is [1FFFE000000000001FFFE]
+start-vswitch: LINENO: 1077 vm_cpus is [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80]
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface dpdk-0 other_config:pmd-rxq-affinity=0:1
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm0-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:65
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface dpdk-1 other_config:pmd-rxq-affinity=0:2
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm14-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:66
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm0-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:3
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm1-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:67
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm1-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:4
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm2-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:68
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm2-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:5
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm3-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:69
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm3-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:6
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm4-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:70
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm4-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:7
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm5-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:71
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm5-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:8
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm6-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:72
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm6-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:9
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm7-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:73
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm7-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:10
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm8-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:74
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm8-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:11
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm9-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:75
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm9-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:12
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm10-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:76
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm10-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:13
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm11-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:77
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm11-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:14
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm12-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:78
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm12-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:15
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm13-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:79
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm13-vhost-user-1-n0 other_config:pmd-rxq-affinity=0:16
+start-vswitch: LINENO: 1092 /usr/bin/ovs-vsctl set Interface vm14-vhost-user-0-n0 other_config:pmd-rxq-affinity=0:80
+start-vswitch: LINENO: 1098 PMD cpumask command: ovs-vsctl set Open_vSwitch . other_config:pmd-cpu-mask=1FFFE000000000001FFFE
+start-vswitch: LINENO: 1099 PMD thread assignments:
+pmd thread numa_id 0 core_id 1:
+  isolated : true
+  port: dpdk-0            queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 2:
+  isolated : true
+  port: dpdk-1            queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 3:
+  isolated : true
+  port: vm0-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 4:
+  isolated : true
+  port: vm1-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 5:
+  isolated : true
+  port: vm2-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 6:
+  isolated : true
+  port: vm3-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 7:
+  isolated : true
+  port: vm4-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 8:
+  isolated : true
+  port: vm5-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 9:
+  isolated : true
+  port: vm6-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 10:
+  isolated : true
+  port: vm7-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 11:
+  isolated : true
+  port: vm8-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 12:
+  isolated : true
+  port: vm9-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 13:
+  isolated : true
+  port: vm10-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 14:
+  isolated : true
+  port: vm11-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 15:
+  isolated : true
+  port: vm12-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 16:
+  isolated : true
+  port: vm13-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 65:
+  isolated : true
+  port: vm0-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 66:
+  isolated : true
+  port: vm14-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 67:
+  isolated : true
+  port: vm1-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 68:
+  isolated : true
+  port: vm2-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 69:
+  isolated : true
+  port: vm3-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 70:
+  isolated : true
+  port: vm4-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 71:
+  isolated : true
+  port: vm5-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 72:
+  isolated : true
+  port: vm6-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 73:
+  isolated : true
+  port: vm7-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 74:
+  isolated : true
+  port: vm8-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 75:
+  isolated : true
+  port: vm9-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 76:
+  isolated : true
+  port: vm10-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 77:
+  isolated : true
+  port: vm11-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 78:
+  isolated : true
+  port: vm12-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 79:
+  isolated : true
+  port: vm13-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
+pmd thread numa_id 0 core_id 80:
+  isolated : true
+  port: vm14-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage: NOT AVAIL
