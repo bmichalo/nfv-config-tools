@@ -3,18 +3,88 @@ pmd thread numa_id 0 core_id 1:
   port: dpdk-0            queue-id:  0 (enabled)   pmd usage:  0 %
 pmd thread numa_id 0 core_id 2:
   isolated : true
-  port: vm3-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+  port: vm27-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
 pmd thread numa_id 0 core_id 5:
   isolated : true
   port: vm0-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
-pmd thread numa_id 0 core_id 8:
+pmd thread numa_id 0 core_id 7:
   isolated : true
   port: vm1-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
 pmd thread numa_id 0 core_id 9:
-  isolated : false
-pmd thread numa_id 0 core_id 11:
   isolated : true
   port: vm2-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 11:
+  isolated : true
+  port: vm3-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 13:
+  isolated : true
+  port: vm4-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 15:
+  isolated : true
+  port: vm5-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 17:
+  isolated : true
+  port: vm6-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 19:
+  isolated : true
+  port: vm7-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 21:
+  isolated : true
+  port: vm8-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 23:
+  isolated : true
+  port: vm9-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 25:
+  isolated : true
+  port: vm10-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 27:
+  isolated : true
+  port: vm11-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 29:
+  isolated : true
+  port: vm12-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 31:
+  isolated : true
+  port: vm13-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 33:
+  isolated : true
+  port: vm14-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 35:
+  isolated : true
+  port: vm15-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 37:
+  isolated : true
+  port: vm16-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 39:
+  isolated : true
+  port: vm17-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 41:
+  isolated : true
+  port: vm18-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 43:
+  isolated : true
+  port: vm19-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 45:
+  isolated : true
+  port: vm20-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 47:
+  isolated : true
+  port: vm21-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 49:
+  isolated : true
+  port: vm22-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 51:
+  isolated : true
+  port: vm23-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 53:
+  isolated : true
+  port: vm24-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 55:
+  isolated : true
+  port: vm25-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 57:
+  isolated : true
+  port: vm26-vhost-user-1-n0  queue-id:  0 (enabled)   pmd usage:  0 %
 pmd thread numa_id 0 core_id 65:
   isolated : true
   port: vm0-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
@@ -24,9 +94,75 @@ pmd thread numa_id 0 core_id 66:
 pmd thread numa_id 0 core_id 69:
   isolated : true
   port: vm1-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
-pmd thread numa_id 0 core_id 72:
+pmd thread numa_id 0 core_id 71:
   isolated : true
   port: vm2-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
-pmd thread numa_id 0 core_id 75:
+pmd thread numa_id 0 core_id 73:
   isolated : true
   port: vm3-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 75:
+  isolated : true
+  port: vm4-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 77:
+  isolated : true
+  port: vm5-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 79:
+  isolated : true
+  port: vm6-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 81:
+  isolated : true
+  port: vm7-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 83:
+  isolated : true
+  port: vm8-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 85:
+  isolated : true
+  port: vm9-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 87:
+  isolated : true
+  port: vm10-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 89:
+  isolated : true
+  port: vm11-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 91:
+  isolated : true
+  port: vm12-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 93:
+  isolated : true
+  port: vm13-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 95:
+  isolated : true
+  port: vm14-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 97:
+  isolated : true
+  port: vm15-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 99:
+  isolated : true
+  port: vm16-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 101:
+  isolated : true
+  port: vm17-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 103:
+  isolated : true
+  port: vm18-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 105:
+  isolated : true
+  port: vm19-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 107:
+  isolated : true
+  port: vm20-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 109:
+  isolated : true
+  port: vm21-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 111:
+  isolated : true
+  port: vm22-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 113:
+  isolated : true
+  port: vm23-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 115:
+  isolated : true
+  port: vm24-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
+pmd thread numa_id 0 core_id 117:
+  isolated : true
+  port: vm25-vhost-user-0-n0  queue-id:  0 (enabled)   pmd usage:  0 %
