@@ -2,7 +2,7 @@
 
 
 echo "*****************************************************"
-echo "* Fixing 2VMs PMD / CPU Affinity for PV-VV-VV-VV-VP *"
+echo "* Fixing 1VMs PMD / CPU Affinity for PV-VV-VV-VV-VP *"
 echo "*****************************************************"
 echo ""
 
@@ -16,7 +16,7 @@ echo""
 #cpu_list=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127
 
 
-cpu_list=37,38,41,109,110,113
+cpu_list=3,5,11,67,69,75
 
 
 pmd_cpu_mask=0
@@ -35,35 +35,35 @@ ovs-vsctl set Open_vSwitch . other_config:pmd-cpu-mask=$pmd_cpu_mask
 
 # phy-br-0
 iface=dpdk-0
-this_cpu_thread=37
+this_cpu_thread=3
 echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread"
 ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
 
 iface=vm0-vhost-user-0-n1
-this_cpu_thread=109
+this_cpu_thread=67
 echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread"
 ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
 
 # phy-br-1
 iface=vm1-vhost-user-1-n1
-this_cpu_thread=38
+this_cpu_thread=5
 echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread"
 ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
 
 iface=dpdk-1
-this_cpu_thread=110
+this_cpu_thread=69
 echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread"
 ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
 
 
 # phy-br-2
 iface=vm0-vhost-user-1-n1
-this_cpu_thread=41
+this_cpu_thread=11
 echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread"
 ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
 
 iface=vm1-vhost-user-0-n1
-this_cpu_thread=113
+this_cpu_thread=75
 echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread"
 ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
 
