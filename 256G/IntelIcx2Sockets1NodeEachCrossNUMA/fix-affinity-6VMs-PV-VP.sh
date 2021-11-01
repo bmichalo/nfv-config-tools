@@ -105,7 +105,7 @@ echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_t
 ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread
 
 
-# phy-br-6
+# phy-br-5
 iface=vm4-vhost-user-1-n1
 this_cpu_thread=27
 echo "ovs-vsctl set Interface $iface other_config:pmd-rxq-affinity=0:$this_cpu_thread"
