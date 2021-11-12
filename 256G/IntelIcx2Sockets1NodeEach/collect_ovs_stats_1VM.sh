@@ -54,7 +54,7 @@ ovs-ofctl dump-ports phy-br-0 >> "${outfile}"
 echo "" >> "${outfile}"
 
 echo "ovs-ofctl dump-ports phy-br-1" >> "${outfile}"
-echo "vm0-vhost-user-1-n1: " >> "${outfile}"
+echo "vm0-vhost-user-0-n1: " >> "${outfile}"
 ovs-vsctl list interface vm0-vhost-user-1-n1 | grep "ofport " >> "${outfile}"
 echo "dpdk-1: " >> "${outfile}"
 ovs-vsctl list interface dpdk-1 | grep "ofport " >> "${outfile}"
@@ -86,8 +86,8 @@ echo "Bridge phy-br-1
     Port vm0-vhost-user-1-n1
     Port dpdk-1" >> "${outfile}"
 
-echo "ovs-vsctl get interface vm0-vhost-user-1-n1 statistics" >> "${outfile}"
-ovs-vsctl get interface vm0-vhost-user-1-n1 statistics >> "${outfile}"
+echo "ovs-vsctl get interface vm0-vhost-user-0-n1 statistics" >> "${outfile}"
+ovs-vsctl get interface vm0-vhost-user-0-n1 statistics >> "${outfile}"
 echo "" >> "${outfile}"
 echo "ovs-vsctl get interface dpdk-1 statistics" >> "${outfile}"
 ovs-vsctl get interface dpdk-1 statistics >> "${outfile}"

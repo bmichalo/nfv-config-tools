@@ -27,6 +27,11 @@ echo "trial_name = $trial_name" >> "${outfile}"
 
 echo -e "\n\n"
 
+
+num_ovs_bridges_1s_based_indexing=`ovs-vsctl show | grep Bridge | wc -l`
+num_vms_0s_based_indexing=$((num_ovs_bridges_1s_based_indexing - 2))
+
+
 echo "
 DUT Configuration:
 ------------------
@@ -34,8 +39,18 @@ Bridge phy-br-0
     Port dpdk-0
     Port vm0-vhost-user-0-n1
 Bridge phy-br-1
-    Port vm0-vhost-user-1-n1
+    Port vm${num_vms_0s_based_indexing}-vhost-user-1-n1
     Port dpdk-1" >> "${outfile}"
+
+if [ $num_vms_0s_based_indexing -gt 0 ]; then
+	for i in {2..$num_ovs_bridges_1s_based_indexing}
+	do
+		echo -e "
+			\nBridge phy-br-${i}
+			\n    Port vm${i-2}-vhost-user-1-n1
+			\n    Port vm${i-1}-vhost-user-0-n1" >> "${outfile}"
+	done
+fi
 
 echo -e "\n\n" >> "${outfile}"
 
@@ -54,15 +69,29 @@ ovs-ofctl dump-ports phy-br-0 >> "${outfile}"
 echo "" >> "${outfile}"
 
 echo "ovs-ofctl dump-ports phy-br-1" >> "${outfile}"
-echo "vm0-vhost-user-1-n1: " >> "${outfile}"
-ovs-vsctl list interface vm0-vhost-user-1-n1 | grep "ofport " >> "${outfile}"
+echo "vm${num_vms_0s_based_indexing}-vhost-user-1-n1: " >> "${outfile}"
+ovs-vsctl list interface vm$num_vms_0s_based_indexing-vhost-user-1-n1 | grep "ofport " >> "${outfile}"
 echo "dpdk-1: " >> "${outfile}"
 ovs-vsctl list interface dpdk-1 | grep "ofport " >> "${outfile}"
 echo "" >> "${outfile}"
 ovs-ofctl dump-ports phy-br-1 >> "${outfile}"
 
-echo "" >> "${outfile}"
 
+if [ $num_vms_0s_based_indexing -gt 0 ]; then
+	for i in {2..$num_ovs_bridges_1s_based_indexing}
+	do
+		echo "ovs-ofctl dump-ports phy-br-${i}" >> "${outfile}"
+		echo "vm${i-2}-vhost-user-1-n1: " >> "${outfile}"
+		ovs-vsctl list interface vm${i-2}-vhost-user-1-n1 | grep "ofport " >> "${outfile}"
+		echo "" >> "${outfile}"
+		echo "vm${i-1}-vhost-user-0-n1: " >> "${outfile}"
+		ovs-vsctl list interface vm${i-1}-vhost-user-0-n1 | grep "ofport " >> "${outfile}"
+		echo "" >> "${outfile}"
+	done
+fi
+
+echo "" >> "${outfile}"
+exit
 
 echo "" >> "${outfile}"
 echo "" >> "${outfile}"
@@ -80,18 +109,34 @@ ovs-vsctl get interface dpdk-0 statistics >> "${outfile}"
 echo "" >> "${outfile}"
 echo "ovs-vsctl get interface vm0-vhost-user-0-n1 statistics" >> "${outfile}"
 ovs-vsctl get interface vm0-vhost-user-0-n1 statistics >> "${outfile}"
-
 echo "" >> "${outfile}"
-echo "Bridge phy-br-1
-    Port vm0-vhost-user-1-n1
-    Port dpdk-1" >> "${outfile}"
 
-echo "ovs-vsctl get interface vm0-vhost-user-1-n1 statistics" >> "${outfile}"
-ovs-vsctl get interface vm0-vhost-user-1-n1 statistics >> "${outfile}"
+
+echo "Bridge phy-br-1
+    Port vm${num_vms_0s_based_indexing}-vhost-user-1-n1
+    Port dpdk-1" >> "${outfile}"
+echo "ovs-vsctl get interface vm${num_vms_0s_based_indexing}-vhost-user-1-n1 statistics" >> "${outfile}"
+ovs-vsctl get interface vm${num_vms_0s_based_indexing}-vhost-user-1-n1 statistics >> "${outfile}"
 echo "" >> "${outfile}"
 echo "ovs-vsctl get interface dpdk-1 statistics" >> "${outfile}"
 ovs-vsctl get interface dpdk-1 statistics >> "${outfile}"
+echo "" >> "${outfile}"
 
+
+if [ $num_vms_0s_based_indexing -gt 0 ]; then
+	for i in {2..$num_ovs_bridges_1s_based_indexing}
+	do
+		echo "Bridge phy-br-${i}
+		    Portvm${i-2}-vhost-user-1-n1 
+		    Port vm${i-1}-vhost-user-0-n1" >> "${outfile}"
+		echo "ovs-vsctl get interface vm${i-2}-vhost-user-1-n1 statistics" >> "${outfile}"
+		ovs-vsctl get interface vm${i-2}-vhost-user-1-n1 statistics >> "${outfile}"
+		echo "" >> "${outfile}"
+		echo "ovs-vsctl get interface vm${i-1}-vhost-user-0-n1 statistics" >> "${outfile}"
+		ovs-vsctl get interface vm${i-1}-vhost-user-0-n1 statistics >> "${outfile}"
+		echo "" >> "${outfile}"
+	done
+fi
 
 echo "" >> "${outfile}"
 
