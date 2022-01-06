@@ -193,8 +193,8 @@
     </interface>
     <interface type='vhostuser'>
       <mac address='52:54:00:cd:af:9d'/>
-      <source type='unix' path='/tmp/vm0-vhost-user-0-n1' mode='server'/>
-      <target dev='vm0-vhost-user-0-n1'/>
+      <source type='unix' path='/tmp/vm0-vhu-0-n1' mode='server'/>
+      <target dev='vm0-vhu-0-n1'/>
       <model type='virtio'/>
       <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024' iommu='on' ats='on'/>
       <alias name='net1'/>
@@ -202,8 +202,8 @@
     </interface>
     <interface type='vhostuser'>
       <mac address='52:54:00:52:b7:22'/>
-      <source type='unix' path='/tmp/vm0-vhost-user-1-n1' mode='server'/>
-      <target dev='vm0-vhost-user-1-n1'/>
+      <source type='unix' path='/tmp/vm0-vhu-1-n1' mode='server'/>
+      <target dev='vm0-vhu-1-n1'/>
       <model type='virtio'/>
       <driver name='vhost' rx_queue_size='1024' tx_queue_size='1024' iommu='on' ats='on'/>
       <alias name='net2'/>

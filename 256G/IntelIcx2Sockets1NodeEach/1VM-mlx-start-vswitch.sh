@@ -791,10 +791,10 @@ ovs) #switch configuration
 		# 
 		# srwxr-x---  1 root root phy-br-0.snoop
 		# srwxr-x---  1 root root phy-br-0.mgmt
-		# srwxr-xr-x  1 root root vm0-vhost-user-0-n0
+		# srwxr-xr-x  1 root root vm0-vhu-0-n0
 		# srwxr-x---  1 root root phy-br-1.mgmt
 		# srwxr-x---  1 root root phy-br-1.snoop
-		# srwxr-xr-x  1 root root vm0-vhost-user-1-n0
+		# srwxr-xr-x  1 root root vm0-vhu-1-n0
 		# 
 		# When this occurs, the VM will fail to start (virsh start ....) because of the socket permissions.
 		# 
@@ -811,10 +811,10 @@ ovs) #switch configuration
 		# srwxrwx---  1 root qemu ovs-vswitchd.18515.ctl
 		# srwxrwx---  1 root qemu phy-br-0.snoop
 		# srwxrwx---  1 root qemu phy-br-0.mgmt
-		# srwxrwxr-x  1 root qemu vm0-vhost-user-0-n0
+		# srwxrwxr-x  1 root qemu vm0-vhu-0-n0
 		# srwxrwx---  1 root qemu phy-br-1.mgmt
 		# srwxrwx---  1 root qemu phy-br-1.snoop
-		# srwxrwxr-x  1 root qemu vm0-vhost-user-1-n0
+		# srwxrwxr-x  1 root qemu vm0-vhu-1-n0
 		# 
 		# and therefore allow the VM to start successfully
 		# 
@@ -887,12 +887,12 @@ ovs) #switch configuration
 					fi
 
 					if [ "$vhost_affinity" == "local" ]; then
-						vhost_port="vm0-vhost-user-$i-n$pci_node"
+						vhost_port="vm0-vhu-$i-n$pci_node"
 						log "vhost_port = $vhost_port"
 					else # use a non-local node
 						remote_pci_nodes=`sub_from_list $node_list $pci_node`
 						remote_pci_node=`echo $remote_pci_nodes | awk -F, '{print $1}'`
-						vhost_port="vm0-vhost-user-$i-n$remote_pci_node"
+						vhost_port="vm0-vhu-$i-n$remote_pci_node"
 					fi
 
 					log "vhost_port: $vhost_port"
@@ -943,12 +943,12 @@ ovs) #switch configuration
 					fi
 
 					if [ "$vhost_affinity" == "local" ]; then
-						vhost_port="vm$number_of_guests_upper_limit-vhost-user-$i-n$pci_node"
+						vhost_port="vm$number_of_guests_upper_limit-vhu-$i-n$pci_node"
 						log "vhost_port = $vhost_port"
 					else # use a non-local node
 						remote_pci_nodes=`sub_from_list $node_list $pci_node`
 						remote_pci_node=`echo $remote_pci_nodes | awk -F, '{print $1}'`
-						vhost_port="vm0-vhost-user-$i-n$remote_pci_node"
+						vhost_port="vm0-vhu-$i-n$remote_pci_node"
 					fi
 
 					log "vhost_port: $vhost_port"
@@ -993,7 +993,7 @@ ovs) #switch configuration
 					second_guest_machine_id=$(( i - 1 ))
 
 					#second=$(( i + 1 ))
-					vhost_port="vm$first_guest_machine_id-vhost-user-1-n$pci_node"
+					vhost_port="vm$first_guest_machine_id-vhu-1-n$pci_node"
 
 					log "first_guest_machine_id = $first_guest_machine_id"
 					log "second_guest_machine_id = $second_guest_machine_id"
@@ -1011,7 +1011,7 @@ ovs) #switch configuration
 					ifaces="$ifaces,$vhost_port"
 					vhu_ifaces="$ifaces,$vhost_port"
 
-					vhost_port="vm$second_guest_machine_id-vhost-user-0-n$pci_node"
+					vhost_port="vm$second_guest_machine_id-vhu-0-n$pci_node"
 
 					log "vhost_port: $vhost_port"
 					vhost_ports="$vhost_ports,$vhost_port"
